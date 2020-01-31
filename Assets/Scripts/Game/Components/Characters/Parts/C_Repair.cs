@@ -12,6 +12,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
     public class C_Repair : C_CharacterPart
     {
         [SerializeField] private C_Character _character;
+        [SerializeField] private float _raycastDistance;
 
         private bool _isRepairing;
 
@@ -30,6 +31,18 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         }
 
         private void Repair(object sender, object args) {
+
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _raycastDistance, LayerMask.GetMask("Workbench")))
+            {
+                Debug.Log("Hit something !");
+                var workbench = hit.collider.GetComponent<Workbench>();
+                if (workbench)
+                {
+                    Debug.Log("Hit workbench !");
+                }
+            }
             _character.Mover.Disable();
         }
 
