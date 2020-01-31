@@ -20,16 +20,13 @@ namespace Assets.Scripts.Game.Components.Systems
 
         private void OnEnable()
         {
-
-            var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-
 #if UNITY_EDITOR
             foreach (var gamepad in Gamepad.all)
             {
+                var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
                 SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
             }
 #endif
-
         }
 
 
