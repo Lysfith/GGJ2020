@@ -20,7 +20,9 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         public event EventHandler OnWestButtonDown;
         public event EventHandler OnWestButtonUp;
         public event EventHandler OnSouthButtonDown;
+        public event EventHandler OnSouthButtonUp;
         public event EventHandler OnEastButtonDown;
+
 
         private void OnEnable()
         {
@@ -59,6 +61,11 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             if (_gamepad.aButton.wasPressedThisFrame)
             {
                 OnSouthButtonDown?.Invoke(this, null);
+            }
+
+            if (_gamepad.aButton.wasReleasedThisFrame)
+            {
+                OnSouthButtonUp?.Invoke(this, null);
             }
 
             if (_gamepad.bButton.wasPressedThisFrame)

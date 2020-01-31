@@ -25,7 +25,38 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             Assert.IsNotNull(_character);
 
+            _character.Control.OnSouthButtonDown += ButtonPressed;
+            _character.Control.OnSouthButtonUp += ButtonReleased;
+
             EnableHand();
+        }
+
+        private void OnDisable()
+        {
+            _character.Control.OnSouthButtonDown -= ButtonPressed;
+            _character.Control.OnSouthButtonUp -= ButtonReleased;
+        }
+
+        private void ButtonPressed(object sender, EventArgs e)
+        {
+            //if (_object != null)
+            //{
+            //    return;
+            //}
+
+            //Take();
+        }
+
+        private void ButtonReleased(object sender, EventArgs e)
+        {
+            if (_object != null)
+            {
+                Throw();
+            }
+            else
+            {
+                Take();
+            }
         }
 
         private void EnableHand()
@@ -53,6 +84,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             _object = _triggerHand.CurrentObject;
             _object.Take();
             _object.transform.SetParent(_hand);
+            _object.transform.localPosition = Vector3.zero;
 
             DisableHand();
         }
@@ -71,6 +103,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             _object.transform.SetParent(null);
             _object.Release();
+            _object = null;
 
             EnableHand();
         }
@@ -89,6 +122,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             _object.transform.SetParent(null);
             _object.Throw(transform.forward);
+            _object = null;
 
             EnableHand();
         }
