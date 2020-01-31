@@ -40,6 +40,8 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             var newPosition = new Vector3(_character.Stats.Direction.x, 0, _character.Stats.Direction.y);
             newPosition = newPosition.normalized * Time.deltaTime * _speed;
             _agent.Move(newPosition);
+
+            transform.forward = newPosition;
         }
     }
 }
