@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   footstep: {fileID: 8300000, guid: dacc74db0bf4e034b9248e05473f4c2f, type: 3}
   footstepalt: {fileID: 8300000, guid: 0fb5b28a8cfcbd1439b767587307a3c9, type: 3}
+  workbenchtap: {fileID: 8300000, guid: 04a1123959d3ec0478534d859a553c6f, type: 3}
+  workbenchturn: {fileID: 8300000, guid: b1c39005c50e79f488a1b50daa185b99, type: 3}
+  droprobot: {fileID: 8300000, guid: c52f7e6a2fb8c794785bb7ea01a01d80, type: 3}
+  dropsmall: {fileID: 8300000, guid: ed5030134e0846743acdaed52cfdb3a2, type: 3}
+  addpart: {fileID: 8300000, guid: 3eec14c02382e864fb022a6d304a74a3, type: 3}
