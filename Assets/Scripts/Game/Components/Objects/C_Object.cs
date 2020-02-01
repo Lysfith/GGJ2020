@@ -13,7 +13,7 @@ namespace Assets.Scripts.Game.Components.Objects
     public class C_Object : MonoBehaviour
     {
         [SerializeField] private Rigidbody _body;
-        [SerializeField] private ObjectType type;
+        [SerializeField] private ObjectType _type;
         [SerializeField] private C_Workbench _workbench;
         [SerializeField] private Collider _collider;
         [SerializeField] private BotType _botType;
