@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workbench_Head
       objectReference: {fileID: 0}
+    - target: {fileID: 7502463016349831650, guid: d9b1af9475030174ea0cba6bfefeb57d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Workbench
+      objectReference: {fileID: 0}
     - target: {fileID: 7502463016349831661, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
       propertyPath: m_LocalPosition.x

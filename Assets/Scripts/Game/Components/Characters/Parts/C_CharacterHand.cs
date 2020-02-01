@@ -98,7 +98,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         private void Take(C_Object obj)
         {
             _object = obj;
-            _object.Take();
+            _object.Take(this.gameObject);
             _object.transform.SetParent(_hand);
             _object.transform.localPosition = new Vector3(
                 _object.OffsetHand.localPosition.x * _object.transform.localScale.x,
@@ -146,11 +146,11 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if (_triggerBot.CurrentBot != null)
             {
-                _triggerBot.CurrentBot.AddPart(_object);
+                _triggerBot.CurrentBot.AddPart(_object, this.gameObject);
             }
             else
             {
-                _object.Release();
+                _object.Release(this.gameObject);
             }
 
             _object = null;
@@ -169,9 +169,8 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             {
                 return;
             }
-
             _object.transform.SetParent(null);
-            _object.Throw(transform.forward);
+            _object.Throw(transform.forward, this.gameObject);
             _object = null;
 
             EnableHand();

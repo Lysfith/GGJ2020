@@ -41,12 +41,12 @@ namespace Assets.Scripts.Game.Components.Bots
             Assert.IsNotNull(_body);
         }
 
-        public void AddPart(C_Object part)
+        public void AddPart(C_Object part, GameObject player)
         {
             if(part.ObjectType == ObjectType.WASTE
                 || part.BotType != _type)
             {
-                part.Release();
+                part.Release(player);
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.CHEST:
                     if (_chest)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _chest = part;
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.HEAD:
                     if (_head)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _head = part;
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.LEFT_ARM:
                     if (_leftArm)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _leftArm = part;
@@ -84,14 +84,14 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.RIGHT_ARM:
                     if (_rightArm)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _rightArm = part;
                     partDestination = _rightArmPosition;
                     break;
             }
-
+            PopupManager.RemoveTipOnPlayer(this.gameObject);
             var botPartAnim = part.gameObject.AddComponent<C_BotPartAnimation>();
             botPartAnim.Init(partDestination, () =>
             {
@@ -118,6 +118,8 @@ namespace Assets.Scripts.Game.Components.Bots
             _collider.enabled = false;
             _body.isKinematic = false;
             _body.useGravity = true;
+
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
 
             StartCoroutine(DestroyAfterTime());
         }

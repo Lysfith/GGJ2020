@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35f7009d5c0ac942b9b57490e2b9d0f, type: 3}
   m_Name: Player Slot 1
   m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
   _active: 0
-  _type: 0
+  _type: 2
+  _ready: 0

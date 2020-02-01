@@ -14,7 +14,10 @@ public class FillEffect : MonoBehaviour
 
     public void Play()
     {
-        StartCoroutine(FillCoroutine());
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(FillCoroutine());
+        }
     }
 
     public IEnumerator FillCoroutine()

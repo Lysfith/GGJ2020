@@ -13,6 +13,7 @@ namespace Assets.Scripts.Game.ScriptableObjects.Characters
     public class PlayerSlot : ScriptableObject
     {
 
+        public Color _color;
         public bool _active;
         public PlayerType _type;
         public Gamepad _gamepad;

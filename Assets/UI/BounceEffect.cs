@@ -18,7 +18,11 @@ public class BounceEffect : MonoBehaviour
 
     public void Play()
     {
-        StartCoroutine(BounceRoutine());
+        if(gameObject.activeSelf)
+        {
+            StartCoroutine(BounceRoutine());
+        }
+
     }
 
     public IEnumerator BounceRoutine()

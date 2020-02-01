@@ -12,13 +12,14 @@ public class GameManagement : MonoBehaviour
 
     //Objets geres
     Timer _Timer;
+    Counter _Counter;
 
     // Start is called before the first frame update
     void Start()
     {
         _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<TextMeshProUGUI>();
         _tmp.text = "Get Ready !";
-        _tmp.fontSize = 80;
+        PopupManager.Activate();
 
     }
 
@@ -50,7 +51,7 @@ public class GameManagement : MonoBehaviour
         _tmp.text = "Fini !!";
 
         StartCoroutine(WaitForClose());
-        Application.Quit();
+        //Application.Quit();
 
     }
     IEnumerator WaitForClose()
@@ -58,10 +59,18 @@ public class GameManagement : MonoBehaviour
         yield return new WaitForSeconds(5);
     }
 
-
+    public void AddOneToCount()
+    {
+        _Counter.Add();
+    }
 
     public void RegisterTimer(Timer t)
     {
         _Timer = t;
+    }
+
+    public void RegisterCounter(Counter c)
+    {
+        _Counter = c;
     }
 }

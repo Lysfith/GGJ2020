@@ -18,7 +18,6 @@ public class SelectionManager : MonoBehaviour
     public Transform _startTransform;
 
     public Dictionary<Gamepad, int> _gamepadSlots;
-    public Color[] _playerColors;
     public int _firstEmpty;
 
     private void Start()
@@ -29,6 +28,7 @@ public class SelectionManager : MonoBehaviour
             playerSlot._active = false;
             playerSlot._ready = false;
             playerSlot._gamepad = null;
+            
         }
     }
 
@@ -92,7 +92,7 @@ public class SelectionManager : MonoBehaviour
         Assert.IsNotNull(rend);
         if(rend)
         {
-            rend.material.SetColor("_BaseColor", _playerColors[slot]);
+            rend.material.SetColor("_BaseColor", _playerSlots[slot]._color);
         }
         _playerSlots[slot]._type = (PlayerType) model;
     }
@@ -105,6 +105,16 @@ public class SelectionManager : MonoBehaviour
         _playerUISlots[_firstEmpty].Find("Info").gameObject.SetActive(true);
         _playerUISlots[_firstEmpty].Find("JoinText").gameObject.SetActive(false);
         while (_playerSlots[_firstEmpty]._active && _firstEmpty < _playerUISlots.Length) _firstEmpty++;
+
+        if (_startTransform.gameObject.activeSelf)
+        {
+            _startTransform.gameObject.SetActive(false);
+            foreach (var img in _startTransform.GetComponentsInChildren<Image>())
+            {
+                img.fillAmount = 0.0f;
+            }
+            _startTransform.Find("GO").gameObject.SetActive(false);
+        }
         /*if (_firstEmpty < _playerUISlots.Length)
         {
             _playerUISlots[_firstEmpty].Find("JoinText").gameObject.SetActive(true);
@@ -155,9 +165,9 @@ public class SelectionManager : MonoBehaviour
                 {
                     img.fillAmount = 0.0f;
                 }
+                _startTransform.Find("GO").gameObject.SetActive(false);
             }
 
-            _startTransform.Find("GO").gameObject.SetActive(false);
         }
         else
         {
