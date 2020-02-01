@@ -91,7 +91,7 @@ namespace Assets.Scripts.Game.Components.Bots
                     partDestination = _rightArmPosition;
                     break;
             }
-
+            PopupManager.RemoveTipOnPlayer(this.gameObject);
             var botPartAnim = part.gameObject.AddComponent<C_BotPartAnimation>();
             botPartAnim.Init(partDestination, () =>
             {
@@ -118,6 +118,8 @@ namespace Assets.Scripts.Game.Components.Bots
             _collider.enabled = false;
             _body.isKinematic = false;
             _body.useGravity = true;
+
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
 
             StartCoroutine(DestroyAfterTime());
         }

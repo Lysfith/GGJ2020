@@ -7,10 +7,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 374266597917567884, guid: d9b1af9475030174ea0cba6bfefeb57d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.437
+      objectReference: {fileID: 0}
+    - target: {fileID: 374266597917567884, guid: d9b1af9475030174ea0cba6bfefeb57d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.428
+      objectReference: {fileID: 0}
     - target: {fileID: 7502463016349831650, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
       propertyPath: m_Name
       value: Workbench_LeftArm
+      objectReference: {fileID: 0}
+    - target: {fileID: 7502463016349831650, guid: d9b1af9475030174ea0cba6bfefeb57d,
+        type: 3}
+      propertyPath: m_TagString
+      value: Workbench
       objectReference: {fileID: 0}
     - target: {fileID: 7502463016349831660, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
@@ -20,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 7502463016349831661, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.02
       objectReference: {fileID: 0}
     - target: {fileID: 7502463016349831661, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
@@ -30,7 +45,7 @@ PrefabInstance:
     - target: {fileID: 7502463016349831661, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 7502463016349831661, guid: d9b1af9475030174ea0cba6bfefeb57d,
         type: 3}
