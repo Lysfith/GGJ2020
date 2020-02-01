@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Game.Components.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,14 @@ namespace Assets.Scripts.Game.Components.Box
         public void ApplyForce(Vector3 force)
         {
             _body.AddForce(force);
+        }
+
+        public void Open()
+        {
+            var levelSystem = FindObjectOfType<C_LevelSystem>();
+            levelSystem.SpawnBoxObject(transform.position);
+
+            Destroy(gameObject);
         }
 
         private void OnCollisionEnter(Collision collision)

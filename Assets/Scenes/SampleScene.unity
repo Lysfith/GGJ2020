@@ -834,6 +834,11 @@ MonoBehaviour:
     type: 3}
   _parachutePrefab: {fileID: 8134260727429184645, guid: 501cd3ff0e1fc2144b103f3480e1e722,
     type: 3}
+  _boxOpenedPrefab: {fileID: 7283873429622496782, guid: bf86cfa4808e5224aad60bec420e3df5,
+    type: 3}
+  _wastePrefab: {fileID: 5076340347368216758, guid: 22db7ecc8d2a2e44b9f70af2dcbde03e,
+    type: 3}
+  _botDefinitionList: {fileID: 11400000, guid: a3fc7236aef9c13479e7346fb206c65f, type: 2}
   _spawnPositions:
   - {fileID: 2101948390}
   - {fileID: 2030548619}
@@ -842,7 +847,10 @@ MonoBehaviour:
   _charactersRoot: {fileID: 1744562730}
   _botRoot: {fileID: 119046170}
   _boxRoot: {fileID: 440826582}
+  _objectRoot: {fileID: 553174662}
   _timeBetweenBotAndParachute: 5
+  _currentBotDefinition: {fileID: 0}
+  _boxes: []
 --- !u!1 &1101943922
 GameObject:
   m_ObjectHideFlags: 0

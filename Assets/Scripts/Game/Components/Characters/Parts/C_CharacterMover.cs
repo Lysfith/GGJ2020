@@ -58,10 +58,9 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             var offset = direction * Time.deltaTime * _speed;
             _agent.Move(offset);
 
-            //var directionFacing = Vector3.Slerp(transform.forward, direction, Time.deltaTime * 10);
-
-            //transform.forward = directionFacing;
-            transform.forward = direction;
+            var directionFacing = Vector3.Slerp(transform.forward, direction, Time.deltaTime * 10);
+            transform.forward = directionFacing;
+            //transform.forward = direction;
         }
     }
 

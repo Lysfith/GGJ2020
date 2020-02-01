@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Components.Characters.Triggers;
+﻿using Assets.Scripts.Game.Components.Box;
+using Assets.Scripts.Game.Components.Characters.Triggers;
 using Assets.Scripts.Game.Components.Objects;
 using Assets.Scripts.Game.Components.Repairing;
 using System;
@@ -169,8 +170,18 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             {
                 return;
             }
-            _object.transform.SetParent(null);
-            _object.Throw(transform.forward, this.gameObject);
+
+            var box = _object.GetComponent<C_Box>();
+            if(box == null)
+            {
+                _object.transform.SetParent(null);
+                _object.Throw(transform.forward, this.gameObject);
+            }
+            else
+            {
+                box.Open();
+            }
+
             _object = null;
 
             EnableHand();
