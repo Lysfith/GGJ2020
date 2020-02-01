@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using Assets.Scripts.Game.Components.Repairing;
 
 namespace Assets.Scripts.Game.Components.Characters.Parts
 {
     public class C_Repair : C_CharacterPart
     {
         [SerializeField] private C_Character _character;
+        [SerializeField] private float _raycastDistance;
 
-        private bool _isRepairing;
+        private C_Workbench _currentWorkbench;
 
         private void OnEnable()
         {
@@ -30,12 +32,36 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         }
 
         private void Repair(object sender, object args) {
-            _character.Mover.Disable();
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _raycastDistance, LayerMask.GetMask("Workbench")))
+            {
+                var workbench = hit.collider.GetComponent<C_Workbench>();
+                if (workbench)
+                {
+                    _character.Mover.Disable();
+                    workbench.OnRepair();
+                    _currentWorkbench = workbench;
+                }
+            }
+
         }
 
         private void Release(object sender, object args)
         {
+            _currentWorkbench = null;
             _character.Mover.Enable();
+        }
+
+        private void Update()
+        {
+            if(_currentWorkbench)
+            {
+                var direction = _character.Stats.Direction;
+                float angle = Mathf.Atan2(direction.y, direction.x);
+
+                _currentWorkbench.UpdateAngle(angle);
+            }
         }
 
     }
