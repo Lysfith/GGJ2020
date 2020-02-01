@@ -82,7 +82,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
 
             _object = _triggerHand.CurrentObject;
-            _object.Take();
+            _object.Take(this.gameObject);
             _object.transform.SetParent(_hand);
             _object.transform.localPosition = Vector3.zero;
 
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
 
             _object.transform.SetParent(null);
-            _object.Release();
+            _object.Release(this.gameObject);
             _object = null;
 
             EnableHand();
@@ -121,7 +121,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
 
             _object.transform.SetParent(null);
-            _object.Throw(transform.forward);
+            _object.Throw(transform.forward, this.gameObject);
             _object = null;
 
             EnableHand();

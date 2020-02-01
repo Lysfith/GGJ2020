@@ -25,7 +25,7 @@ public class Timer : MonoBehaviour
             if (_time <= 0)
             {
                 end = true;
-                GameObject.FindGameObjectWithTag("Canvas").GetComponent<GameManagement>().EndGame();
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().EndGame();
             }
         }
     }

@@ -2,29 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Game.Components.Systems
+public static class SoundManager 
 {
-    class SoundManager : MonoBehaviour
+    static public void StartFoodStepSound(GameObject player)
     {
+        player.AddComponent<SoundSteps>();
+    }
 
-        [SerializeField] public static AudioClip _footstep;
-        [SerializeField] public static AudioClip _footstepalt;
+    static public void StopFoodStepSound(GameObject player)
+    {
+        player.GetComponent<SoundSteps>().DestroySelf();
+    }
+    static public bool IsSounding(GameObject player)
+    {
+        return player.GetComponent<AudioSource>().clip != null;
+    }
 
-
-
-        static public void StartFoodStepSound(GameObject player)
+    static public AudioClip GetAudioClip(SoundList.Sound sound)
+    {
+        SoundList sl = Resources.Load<SoundList>("SoundList");
+        switch (sound)
         {
-            player.AddComponent<SoundSteps>();
+            case SoundList.Sound.footstep:return sl.footstep;
+            case SoundList.Sound.footstepalt: return sl.footstepalt;
+            default: return null;
         }
 
-        static public void StopFoodStepSound(GameObject player)
-        {
-            player.GetComponent<SoundSteps>().DestroySelf();
-        }
-
-        static public bool IsSounding(GameObject player)
-        {
-            return player.GetComponent<AudioSource>().clip != null;
-        }
     }
 }

@@ -13,7 +13,7 @@ public class SoundSteps : MonoBehaviour
     void Start()
     {
         _source = GetComponent<AudioSource>();
-        _source.clip = SoundManager._footstep;
+        _source.clip = SoundManager.GetAudioClip(SoundList.Sound.footstep);
     }
 
     // Update is called once per frame
@@ -21,15 +21,17 @@ public class SoundSteps : MonoBehaviour
     {
         if (!_source.isPlaying)
         {
-            if (_time == 0)
-                _source.clip = SoundManager._footstepalt;
-            if (_time == 4)
+            if (_time == -1)
             {
-                _time = -1;
-                _source.clip = SoundManager._footstepalt;
+                _source.clip = SoundManager.GetAudioClip(SoundList.Sound.footstep);
+                _time = Random.Range(0, 6);
+            }
+            if (_time == 0)
+            {
+                _source.clip = SoundManager.GetAudioClip(SoundList.Sound.footstepalt);
             }
             _source.Play();
-            _time++;
+            _time--;
 
         }
     }

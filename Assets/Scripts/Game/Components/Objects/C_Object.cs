@@ -37,20 +37,23 @@ namespace Assets.Scripts.Game.Components.Objects
             Assert.IsNotNull(_body);
         }
 
-        public void Take()
+        public void Take(GameObject player)
         {
             _body.isKinematic = true;
+            PopupManager.ShowTipOnPlayer(player, this.type);
         }
 
-        public void Release()
+        public void Release(GameObject player)
         {
             _body.isKinematic = false;
+            PopupManager.RemoveTipOnPlayer(player);
         }
 
-        public void Throw(Vector3 direction)
+        public void Throw(Vector3 direction, GameObject player)
         {
             _body.isKinematic = false;
             _body.AddForce(direction.normalized * 10, ForceMode.Impulse);
+            PopupManager.RemoveTipOnPlayer(player);
         }
 
         public void OnCollisionEnter(Collision collision)
