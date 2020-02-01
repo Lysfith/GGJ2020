@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Game.Components.Bots;
 using Assets.Scripts.Game.Components.Characters;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,17 +16,19 @@ namespace Assets.Scripts.Game.Components.Systems
         [Header("Prefabs")]
         [SerializeField] private GameObject _characterPrefab;
         [SerializeField] private GameObject _botPrefab;
+        [SerializeField] private GameObject _parachutePrefab;
 
         [Header("References")]
         [SerializeField] private List<Transform> _spawnPositions;
         [SerializeField] private Transform _charactersRoot;
         [SerializeField] private Transform _botRoot;
-        [SerializeField] private C_ObjectSpawnerSystem _objectSpawnerSystem;
+        [SerializeField] private Transform _boxRoot;
+
+        [Header("Properties")]
+        [SerializeField] private float _timeBetweenBotAndParachute;
 
         private void OnEnable()
         {
-            _objectSpawnerSystem = FindObjectOfType<C_ObjectSpawnerSystem>();
-
 #if UNITY_EDITOR
             foreach (var gamepad in Gamepad.all)
             {
@@ -48,6 +51,14 @@ namespace Assets.Scripts.Game.Components.Systems
             character.Control.SetGamepad(gamepad);
         }
 
+        private IEnumerator SpawnParachute()
+        {
+            yield return new WaitForSeconds(_timeBetweenBotAndParachute);
+
+            var go = Instantiate(_parachutePrefab, _boxRoot);
+            go.transform.localPosition = Vector3.zero;
+        }
+
         private void SpawnBot(GameObject prefab)
         {
             var go = Instantiate(prefab, _botRoot);
@@ -59,7 +70,7 @@ namespace Assets.Scripts.Game.Components.Systems
                 SpawnBot(_botPrefab);
             };
 
-            _objectSpawnerSystem.SpawnObjectList();
+            StartCoroutine(SpawnParachute());
         }
     }
 }

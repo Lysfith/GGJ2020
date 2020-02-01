@@ -30,14 +30,14 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            if(!_isEnabled)
+            if (!_isEnabled)
             {
                 return;
             }
 
-            if(_character.Stats.Direction.x == 0 && _character.Stats.Direction.y == 0)
+            if (_character.Stats.Direction.x == 0 && _character.Stats.Direction.y == 0)
             {
                 if (_ismoving == true)
                 {
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 return;
             }
 
-            if(_ismoving == false)
+            if (_ismoving == false)
             {
                 _ismoving = true;
                 SoundManager.StartFoodStepSound(this.gameObject);
@@ -58,9 +58,10 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             var offset = direction * Time.deltaTime * _speed;
             _agent.Move(offset);
 
-            var directionFacing = Vector3.Slerp(transform.forward, direction, Time.deltaTime*10);
+            //var directionFacing = Vector3.Slerp(transform.forward, direction, Time.deltaTime * 10);
 
-            transform.forward = directionFacing;
+            //transform.forward = directionFacing;
+            transform.forward = direction;
         }
     }
 
