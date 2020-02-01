@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using Assets.Scripts.Game.ScriptableObjects.Characters;
 using Assets.Scripts;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -41,10 +42,6 @@ public class SelectionManager : MonoBehaviour
                 {
                     PlayerReady(gamepadSlot);
                 }
-                else if (_firstEmpty < _playerUISlots.Length)
-                {
-                    PlayerJoin(gamepad);
-                }
             }
             else if (gamepad.buttonEast.wasPressedThisFrame)
             {
@@ -54,15 +51,18 @@ public class SelectionManager : MonoBehaviour
                 }
 
             }
-
-            if (gamepad.leftShoulder.wasPressedThisFrame || gamepad.leftTrigger.wasPressedThisFrame || gamepad.dpad.left.wasPressedThisFrame || gamepad.leftStick.left.wasPressedThisFrame)
+            else if (gamepad.startButton.wasPressedThisFrame && _firstEmpty < _playerUISlots.Length) {
+                PlayerJoin(gamepad);
+            }
+            else if (gamepad.leftShoulder.wasPressedThisFrame || gamepad.leftTrigger.wasPressedThisFrame || gamepad.dpad.left.wasPressedThisFrame || gamepad.leftStick.left.wasPressedThisFrame)
             {
                 if (_gamepadSlots.TryGetValue(gamepad, out int gamepadSlot))
                 {
                     _playerUISlots[gamepadSlot].Find("Info").Find("Left").GetComponent<BounceEffect>().Play();
                     ChangeModel(gamepadSlot, ((int) _playerSlots[gamepadSlot]._type) - 1);
                 }
-            } else if (gamepad.rightShoulder.wasPressedThisFrame || gamepad.rightTrigger.wasPressedThisFrame || gamepad.dpad.right.wasPressedThisFrame || gamepad.leftStick.right.wasPressedThisFrame)
+            }
+            else if (gamepad.rightShoulder.wasPressedThisFrame || gamepad.rightTrigger.wasPressedThisFrame || gamepad.dpad.right.wasPressedThisFrame || gamepad.leftStick.right.wasPressedThisFrame)
             {
                 if (_gamepadSlots.TryGetValue(gamepad, out int gamepadSlot))
                 {
@@ -119,6 +119,8 @@ public class SelectionManager : MonoBehaviour
             _playerUISlots[slot].Find("Ready").gameObject.SetActive(true);
             _playerUISlots[slot].Find("Ready").GetComponent<BounceEffect>()._callBack.AddListener(OnReady);
             _playerUISlots[slot].Find("Ready").GetComponent<BounceEffect>().Play();
+            _playerUISlots[slot].Find("Info").Find("Left").gameObject.SetActive(false);
+            _playerUISlots[slot].Find("Info").Find("Right").gameObject.SetActive(false);
         }
     }
 
@@ -133,7 +135,7 @@ public class SelectionManager : MonoBehaviour
         if (allReady)
         {
             _startTransform.gameObject.SetActive(true);
-            _startTransform.GetComponent<BounceEffect>().Play();
+            _startTransform.GetComponent<FillEffect>().Play();
         }
     }
 
@@ -142,12 +144,20 @@ public class SelectionManager : MonoBehaviour
         if(_playerSlots[slot]._ready)
         {
             _playerUISlots[slot].Find("Ready").gameObject.SetActive(false);
+            _playerUISlots[slot].Find("Info").Find("Left").gameObject.SetActive(true);
+            _playerUISlots[slot].Find("Info").Find("Right").gameObject.SetActive(true);
             _playerSlots[slot]._ready = false;
 
             if(_startTransform.gameObject.activeSelf)
             {
                 _startTransform.gameObject.SetActive(false);
+                foreach (var img in _startTransform.GetComponentsInChildren<Image>())
+                {
+                    img.fillAmount = 0.0f;
+                }
             }
+
+            _startTransform.Find("GO").gameObject.SetActive(false);
         }
         else
         {
