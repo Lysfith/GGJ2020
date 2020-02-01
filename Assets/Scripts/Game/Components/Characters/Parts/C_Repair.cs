@@ -42,6 +42,10 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                     _character.Mover.Disable();
                     workbench.OnRepair();
                     _currentWorkbench = workbench;
+                    if(workbench.GetWorkbenchType() == ObjectType.LEFT_ARM || workbench.GetWorkbenchType() == ObjectType.RIGHT_ARM)
+                        SoundManager.PlaySound(SoundList.Sound.workbenchturn, this.gameObject, false);
+                    else
+                        SoundManager.PlaySound(SoundList.Sound.workbenchtap, this.gameObject, false);
                 }
             }
 

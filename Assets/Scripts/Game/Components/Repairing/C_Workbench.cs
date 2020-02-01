@@ -64,7 +64,6 @@ namespace Assets.Scripts.Game.Components.Repairing
             {
                 return;
             }
-
             _currentRobotPart.Progress++;
         }
 

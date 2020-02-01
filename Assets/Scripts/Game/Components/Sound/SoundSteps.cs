@@ -38,7 +38,6 @@ public class SoundSteps : MonoBehaviour
 
     public void DestroySelf()
     {
-        _source.clip = null;
         Destroy(this);
     }
 }

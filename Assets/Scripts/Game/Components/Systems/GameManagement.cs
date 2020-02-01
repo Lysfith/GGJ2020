@@ -62,6 +62,7 @@ public class GameManagement : MonoBehaviour
     public void AddOneToCount()
     {
         _Counter.Add();
+        _Timer.AddTime();
     }
 
     public void RegisterTimer(Timer t)
