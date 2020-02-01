@@ -6,6 +6,7 @@ using Assets.Scripts.Game.ScriptableObjects.Characters;
 using Assets.Scripts;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class SelectionManager : MonoBehaviour
 
     public Dictionary<Gamepad, int> _gamepadSlots;
     public int _firstEmpty;
+
+    public UnityEvent OnStart;
+    public UnityEvent OnBack;
 
     private void Start()
     {
@@ -49,7 +53,10 @@ public class SelectionManager : MonoBehaviour
                 {
                     PlayerLeave(gamepadSlot);
                 }
-
+                else
+                {
+                    Back();
+                }
             }
             else if (gamepad.startButton.wasPressedThisFrame && _firstEmpty < _playerUISlots.Length) {
                 PlayerJoin(gamepad);
@@ -72,6 +79,11 @@ public class SelectionManager : MonoBehaviour
             }
 
         }
+    }
+
+    private void Back()
+    {
+        OnBack?.Invoke();
     }
 
     private void ChangeModel(int slot, int modelIndex)
@@ -146,6 +158,8 @@ public class SelectionManager : MonoBehaviour
         {
             _startTransform.gameObject.SetActive(true);
             _startTransform.GetComponent<FillEffect>().Play();
+
+            OnStart?.Invoke();
         }
     }
 
