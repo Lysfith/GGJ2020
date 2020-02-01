@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Game.Components.Characters.Triggers;
 using Assets.Scripts.Game.Components.Objects;
+using Assets.Scripts.Game.Components.Repairing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         [SerializeField] private C_TriggerHand _triggerHand;
         [SerializeField] private C_TriggerBot _triggerBot;
         [SerializeField] private C_Object _object;
+        [SerializeField] private float _raycastDistance;
 
         private void OnEnable()
         {
@@ -80,17 +82,52 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 return;
             }
 
-            if(_triggerHand.CurrentObject == null)
+            if (!TakeFromWorkbench())
             {
-                return;
+                if (_triggerHand.CurrentObject == null)
+                {
+                    return;
+                }
+
+                Take(_triggerHand.CurrentObject);
             }
 
-            _object = _triggerHand.CurrentObject;
+            
+        }
+
+        private void Take(C_Object obj)
+        {
+            _object = obj;
             _object.Take();
             _object.transform.SetParent(_hand);
-            _object.transform.localPosition = Vector3.zero;
+            _object.transform.localPosition = new Vector3(
+                _object.OffsetHand.localPosition.x * _object.transform.localScale.x,
+                _object.OffsetHand.localPosition.y * _object.transform.localScale.y,
+                _object.OffsetHand.localPosition.z * _object.transform.localScale.z);
 
             DisableHand();
+
+        }
+
+
+        private bool TakeFromWorkbench()
+        {
+            RaycastHit hit;
+            // Does the ray intersect any objects excluding the player layer
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _raycastDistance, LayerMask.GetMask("Workbench")))
+            {
+                var workbench = hit.collider.GetComponent<C_Workbench>();
+                if (workbench != null && workbench.CanTakeObject())
+                {
+                    var obj = workbench.TakeObject();
+                    Take(obj);
+                    _character.Mover.Enable();
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         public void Release()

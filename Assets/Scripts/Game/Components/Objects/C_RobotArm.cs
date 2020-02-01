@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 namespace Assets.Scripts.Game.Components.Objects
 {
 
-    public class C_RobotArm : C_Object
+    public class C_RobotArm : MonoBehaviour
     {
         [Tooltip("Number of circles to repair")]
         [SerializeField] private float _hardness = 10f;
