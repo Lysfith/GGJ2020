@@ -10,6 +10,7 @@ namespace Assets.Scripts.Game.Components.Repairing
     {
 
         private const float MAX_ANGLE_DIFF = Mathf.PI / 4;
+        private const float LED_INTENSITY = 2f;
 
         private float _lastAngle;
         [SerializeField] private ObjectType _workbenchType;
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Game.Components.Repairing
                     _currentObject = value;
                     if(_currentObject)
                     {
-                        _renderer.materials[1].SetColor("_BaseColor", new Color(1.0f, 0.15f, 0));
+                        ChangeLEDColor(new Color(1.0f, 0.15f, 0f));
                     }
                 }
             }
@@ -70,9 +71,14 @@ namespace Assets.Scripts.Game.Components.Repairing
             _currentRobotArm = null;
             _currentRobotPart = null;
 
-            _renderer.materials[1].SetColor("_BaseColor", new Color(.04f, .04f, .04f));
+            ChangeLEDColor(new Color(.04f, .04f, .04f));
 
             return _currentObject;
+        }
+
+        private void ChangeLEDColor(Color color)
+        {
+            _renderer.materials[1].SetVector("_EmissionColor", color * LED_INTENSITY);
         }
 
         public void OnRepair()
@@ -84,7 +90,7 @@ namespace Assets.Scripts.Game.Components.Repairing
             _currentRobotPart.Progress++;
             if(_currentRobotPart.Progress == _currentRobotPart.Hardness)
             {
-                _renderer.materials[1].SetColor("_BaseColor", new Color(.04f, 1f, 0));
+                ChangeLEDColor(new Color(.04f, 1f, 0));
             }
         }
 
@@ -114,7 +120,7 @@ namespace Assets.Scripts.Game.Components.Repairing
 
             if (_currentRobotArm.Progress == 1.0f)
             {
-                _renderer.materials[1].SetColor("_BaseColor", new Color(.04f, 1f, 0));
+                ChangeLEDColor(new Color(.04f, 1f, 0));
             }
 
             _lastAngle = angle;
@@ -144,7 +150,7 @@ namespace Assets.Scripts.Game.Components.Repairing
 
             _currentObject = obj;
 
-            _renderer.materials[1].SetColor("_BaseColor", new Color(1.0f, 0.15f, 0));
+            ChangeLEDColor(new Color(1.0f, 0.15f, 0));
 
             if (robotArm != null)
             {
