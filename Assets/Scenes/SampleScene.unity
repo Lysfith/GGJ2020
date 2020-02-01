@@ -629,6 +629,7 @@ Transform:
   - {fileID: 1346569697}
   - {fileID: 1894029451}
   - {fileID: 1854905084}
+  - {fileID: 1195243995}
   m_Father: {fileID: 8641434389324609474}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1071,6 +1072,50 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 4, y: 2, z: 6}
   m_TimeToStationary: 0.5
+--- !u!1 &1195243994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1195243995}
+  - component: {fileID: 1195243996}
+  m_Layer: 15
+  m_Name: WallBot
+  m_TagString: Untagged
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1195243995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195243994}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.62, y: 1.5, z: -3.81}
+  m_LocalScale: {x: 1.5, y: 6, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 739004887}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1195243996
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195243994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.0069847107, z: 0}
 --- !u!1 &1197164475
 GameObject:
   m_ObjectHideFlags: 0
