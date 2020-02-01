@@ -4,18 +4,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.Components.Systems
 {
-    static class SoundManager
+    class SoundManager : MonoBehaviour
     {
 
-        [SerializeField] static AudioClip _footstep;
-        [SerializeField] static AudioClip _footstepalt;
+        [SerializeField] public static AudioClip _footstep;
+        [SerializeField] public static AudioClip _footstepalt;
 
 
 
         static public void StartFoodStepSound(GameObject player)
         {
-            player.GetComponent<AudioSource>().clip = _footstep;
-            player.AddComponent<SoundSteps>().SetSoundSteps(_footstep, _footstepalt);
+            player.AddComponent<SoundSteps>();
         }
 
         static public void StopFoodStepSound(GameObject player)
