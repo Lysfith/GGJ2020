@@ -8,10 +8,23 @@ public class SoundList : ScriptableObject
     public enum Sound
     {
         footstep,
-        footstepalt
+        footstepalt,
+        workbenchtap,
+        workbenchturn,
+        workbenchok,
+        droprobot,
+        dropsmall,
+        addpart,
+        
     }
 
     public AudioClip footstep;
     public AudioClip footstepalt;
+    public AudioClip workbenchtap;
+    public AudioClip workbenchturn;
+    public AudioClip workbenchok;
+    public AudioClip droprobot;
+    public AudioClip dropsmall;
+    public AudioClip addpart;
 
 }

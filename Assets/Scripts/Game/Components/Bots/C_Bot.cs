@@ -91,6 +91,7 @@ namespace Assets.Scripts.Game.Components.Bots
                     partDestination = _rightArmPosition;
                     break;
             }
+            SoundManager.PlaySound(SoundList.Sound.addpart);
             PopupManager.RemoveTipOnPlayer(this.gameObject);
             var botPartAnim = part.gameObject.AddComponent<C_BotPartAnimation>();
             botPartAnim.Init(partDestination, () =>
@@ -118,7 +119,7 @@ namespace Assets.Scripts.Game.Components.Bots
             _collider.enabled = false;
             _body.isKinematic = false;
             _body.useGravity = true;
-
+            SoundManager.PlaySound(SoundList.Sound.droprobot,priority:true);
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
 
             StartCoroutine(DestroyAfterTime());
@@ -130,6 +131,14 @@ namespace Assets.Scripts.Game.Components.Bots
 
             OnBotComplete?.Invoke(this, null);
             Destroy(gameObject);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.tag.Equals("Floor"))
+            {
+                _body.isKinematic = true;
+            }
         }
     }
 }

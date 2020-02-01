@@ -81,7 +81,6 @@ namespace Assets.Scripts.Game.Components.Repairing
             {
                 return;
             }
-
             _currentRobotPart.Progress++;
             if(_currentRobotPart.Progress == _currentRobotPart.Hardness)
             {

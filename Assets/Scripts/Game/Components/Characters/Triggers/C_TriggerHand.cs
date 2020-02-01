@@ -10,16 +10,22 @@ namespace Assets.Scripts.Game.Components.Characters.Triggers
 {
     public class C_TriggerHand : MonoBehaviour
     {
-        public C_Object CurrentObject;
+        //public C_Object CurrentObject;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            CurrentObject = other.GetComponent<C_Object>();
-        }
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    CurrentObject = other.GetComponent<C_Object>();
+        //}
 
-        private void OnTriggerExit(Collider other)
+        //private void OnTriggerExit(Collider other)
+        //{
+        //    CurrentObject = null;
+        //}
+
+        public IEnumerable<C_Object> GetObjects()
         {
-            CurrentObject = null;
+            var colliders = Physics.OverlapSphere(transform.position, 1, LayerMask.GetMask("Object"));
+            return colliders.Select(c => c.GetComponent<C_Object>()).ToList();
         }
     }
 }

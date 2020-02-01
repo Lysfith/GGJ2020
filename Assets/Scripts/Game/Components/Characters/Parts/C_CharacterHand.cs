@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Components.Characters.Triggers;
+﻿using Assets.Scripts.Game.Components.Box;
+using Assets.Scripts.Game.Components.Characters.Triggers;
 using Assets.Scripts.Game.Components.Objects;
 using Assets.Scripts.Game.Components.Repairing;
 using System;
@@ -84,12 +85,27 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if (!TakeFromWorkbench())
             {
-                if (_triggerHand.CurrentObject == null)
+                var objects = _triggerHand.GetObjects();
+
+                if(!objects.Any())
                 {
                     return;
                 }
 
-                Take(_triggerHand.CurrentObject);
+                float min = float.MaxValue;
+                C_Object objMin = null;
+
+                foreach(var obj in objects)
+                {
+                    var distance = Vector3.Distance(transform.position, obj.transform.position);
+                    if(distance < min)
+                    {
+                        min = distance;
+                        objMin = obj;
+                    }
+                }
+
+                Take(objMin);
             }
 
             
@@ -100,10 +116,12 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             _object = obj;
             _object.Take(this.gameObject);
             _object.transform.SetParent(_hand);
-            _object.transform.localPosition = new Vector3(
-                _object.OffsetHand.localPosition.x * _object.transform.localScale.x,
-                _object.OffsetHand.localPosition.y * _object.transform.localScale.y,
-                _object.OffsetHand.localPosition.z * _object.transform.localScale.z);
+            _object.transform.localPosition = Vector3.zero;
+            _object.transform.localRotation = Quaternion.identity;
+            //_object.transform.localPosition = new Vector3(
+            //    _object.OffsetHand.localPosition.x * _object.transform.localScale.x,
+            //    _object.OffsetHand.localPosition.y * _object.transform.localScale.y,
+            //    _object.OffsetHand.localPosition.z * _object.transform.localScale.z);
 
             DisableHand();
 
@@ -169,8 +187,18 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             {
                 return;
             }
-            _object.transform.SetParent(null);
-            _object.Throw(transform.forward, this.gameObject);
+
+            var box = _object.GetComponent<C_Box>();
+            if(box == null)
+            {
+                _object.transform.SetParent(null);
+                _object.Throw(transform.forward, this.gameObject);
+            }
+            else
+            {
+                box.Open();
+            }
+
             _object = null;
 
             EnableHand();
