@@ -56,7 +56,7 @@ namespace Assets.Scripts.Game.Components.Objects
         public void OnCollisionEnter(Collision collision)
         {
             var workbench = collision.collider.GetComponent<C_Workbench>();
-            if (workbench && !workbench.CurrentObject && workbench.ObjectType == type)
+            if (workbench && !workbench.CurrentObject && workbench.ObjectType == _type)
             {
                 transform.rotation = workbench.transform.rotation;
                 // TODO : Change to workbench offset transform
