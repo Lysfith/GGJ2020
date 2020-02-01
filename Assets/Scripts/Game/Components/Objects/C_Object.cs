@@ -13,8 +13,9 @@ namespace Assets.Scripts.Game.Components.Objects
     public class C_Object : MonoBehaviour
     {
         [SerializeField] private Rigidbody _body;
-        [SerializeField] private Collider _collider;
         [SerializeField] private ObjectType _type;
+        [SerializeField] private C_Workbench _workbench;
+        [SerializeField] private Collider _collider;
         [SerializeField] private BotType _botType;
         [SerializeField] private Transform _offsetHand;
 
@@ -35,6 +36,10 @@ namespace Assets.Scripts.Game.Components.Objects
 
         public void Take(GameObject player)
         {
+            if(_workbench)
+            {
+                _workbench.CurrentObject = null;
+            }
             _collider.enabled = false;
             _body.isKinematic = true;
             PopupManager.ShowTipOnPlayer(player, this._type);

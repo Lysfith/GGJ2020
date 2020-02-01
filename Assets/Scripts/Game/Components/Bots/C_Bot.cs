@@ -132,5 +132,13 @@ namespace Assets.Scripts.Game.Components.Bots
             OnBotComplete?.Invoke(this, null);
             Destroy(gameObject);
         }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.tag.Equals("Floor"))
+            {
+                _body.isKinematic = true;
+            }
+        }
     }
 }

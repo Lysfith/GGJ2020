@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class GameManagement : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class GameManagement : MonoBehaviour
     //Objets geres
     Timer _Timer;
     Counter _Counter;
+
+    public UnityEvent OnStart;
+    public UnityEvent OnEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +44,8 @@ public class GameManagement : MonoBehaviour
                     Destroy(_tmp.gameObject);
                     _active = false;
                     _Timer.TimerReset();
+
+                    OnStart?.Invoke();
                 }
             }
         }
@@ -49,6 +55,8 @@ public class GameManagement : MonoBehaviour
     {
         _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<TextMeshProUGUI>();
         _tmp.text = "Fini !!";
+
+        OnEnd?.Invoke();
 
         StartCoroutine(WaitForClose());
         //Application.Quit();

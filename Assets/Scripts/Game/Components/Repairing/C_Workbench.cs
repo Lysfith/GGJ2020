@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Game.Components.Objects;
+using UnityEngine.Assertions;
 
 namespace Assets.Scripts.Game.Components.Repairing
 {
@@ -12,7 +13,10 @@ namespace Assets.Scripts.Game.Components.Repairing
 
         private float _lastAngle;
         [SerializeField] private ObjectType _workbenchType;
+
         [SerializeField] private Transform _objectPosition;
+
+        [SerializeField] private Renderer _renderer;
 
         private C_Object _currentObject;
         private C_RobotArm _currentRobotArm;
@@ -23,11 +27,22 @@ namespace Assets.Scripts.Game.Components.Repairing
                 return _currentObject;
             }
             set {
-                if(!_currentObject)
+                if(!_currentObject || !value)
                 {
                     _currentObject = value;
+                    if(_currentObject)
+                    {
+                        _renderer.materials[1].SetColor("_BaseColor", new Color(1.0f, 0.15f, 0));
+                    }
                 }
             }
+        }
+
+        private void OnEnable()
+        {
+            _renderer = GetComponentInChildren<Renderer>();
+
+            Assert.IsNotNull(_renderer);
         }
 
         public bool CanTakeObject()
@@ -55,6 +70,8 @@ namespace Assets.Scripts.Game.Components.Repairing
             _currentRobotArm = null;
             _currentRobotPart = null;
 
+            _renderer.materials[1].SetColor("_BaseColor", new Color(.04f, .04f, .04f));
+
             return _currentObject;
         }
 
@@ -65,6 +82,10 @@ namespace Assets.Scripts.Game.Components.Repairing
                 return;
             }
             _currentRobotPart.Progress++;
+            if(_currentRobotPart.Progress == _currentRobotPart.Hardness)
+            {
+                _renderer.materials[1].SetColor("_BaseColor", new Color(.04f, 1f, 0));
+            }
         }
 
         public void UpdateAngle(float angle)
@@ -90,6 +111,12 @@ namespace Assets.Scripts.Game.Components.Repairing
                     _currentRobotArm.Progress += Mathf.Max(0, -angleDelta) / (2 * Mathf.PI * _currentRobotArm.Hardness);
                 }
             }
+
+            if (_currentRobotArm.Progress == 1.0f)
+            {
+                _renderer.materials[1].SetColor("_BaseColor", new Color(.04f, 1f, 0));
+            }
+
             _lastAngle = angle;
         }
 
@@ -116,6 +143,8 @@ namespace Assets.Scripts.Game.Components.Repairing
             }
 
             _currentObject = obj;
+
+            _renderer.materials[1].SetColor("_BaseColor", new Color(1.0f, 0.15f, 0));
 
             if (robotArm != null)
             {

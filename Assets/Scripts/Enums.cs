@@ -21,4 +21,12 @@ namespace Assets.Scripts
         Type1
     }
 
+    public enum PlayerType
+    {
+        MALE,
+        FEMALE,
+        RACCOON,
+        NERD
+    }
+
 }
