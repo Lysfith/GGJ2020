@@ -33,23 +33,26 @@ namespace Assets.Scripts.Game.Components.Objects
             Assert.IsNotNull(_offsetHand);
         }
 
-        public void Take()
+        public void Take(GameObject player)
         {
             _collider.enabled = false;
             _body.isKinematic = true;
+            PopupManager.ShowTipOnPlayer(player, this._type);
         }
 
-        public void Release()
+        public void Release(GameObject player)
         {
             _collider.enabled = true;
             _body.isKinematic = false;
+            PopupManager.RemoveTipOnPlayer(player);
         }
 
-        public void Throw(Vector3 direction)
+        public void Throw(Vector3 direction, GameObject player)
         {
             _collider.enabled = true;
             _body.isKinematic = false;
             _body.AddForce(direction.normalized * 10, ForceMode.Impulse);
+            PopupManager.RemoveTipOnPlayer(player);
         }
 
         public void EnterWorkbench()

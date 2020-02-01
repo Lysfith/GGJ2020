@@ -41,12 +41,12 @@ namespace Assets.Scripts.Game.Components.Bots
             Assert.IsNotNull(_body);
         }
 
-        public void AddPart(C_Object part)
+        public void AddPart(C_Object part, GameObject player)
         {
             if(part.ObjectType == ObjectType.WASTE
                 || part.BotType != _type)
             {
-                part.Release();
+                part.Release(player);
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.CHEST:
                     if (_chest)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _chest = part;
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.HEAD:
                     if (_head)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _head = part;
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.LEFT_ARM:
                     if (_leftArm)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _leftArm = part;
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Game.Components.Bots
                 case ObjectType.RIGHT_ARM:
                     if (_rightArm)
                     {
-                        part.Release();
+                        part.Release(player);
                         return;
                     }
                     _rightArm = part;
