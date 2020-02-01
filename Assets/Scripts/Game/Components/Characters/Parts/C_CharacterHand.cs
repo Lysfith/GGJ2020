@@ -169,7 +169,6 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             {
                 return;
             }
-
             _object.transform.SetParent(null);
             _object.Throw(transform.forward, this.gameObject);
             _object = null;

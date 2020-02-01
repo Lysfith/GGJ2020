@@ -13,6 +13,7 @@ public class Counter : MonoBehaviour
     public void Start()
     {
         this.gameObject.GetComponent<TextMeshProUGUI>().text = _count.ToString();
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().RegisterCounter(this);
     }
     public void Add()
     {

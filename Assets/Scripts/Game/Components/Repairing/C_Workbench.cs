@@ -133,5 +133,9 @@ namespace Assets.Scripts.Game.Components.Repairing
             obj.EnterWorkbench();
 
         }
+        public ObjectType GetWorkbenchType()
+        {
+            return _workbenchType;
+        }
     }
 }
