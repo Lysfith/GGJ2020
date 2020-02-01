@@ -21,6 +21,7 @@ namespace Assets.Scripts.Game.Components.Systems
 
         [Header("Properties")]
         [SerializeField] private float _nbObjects;
+        [SerializeField] private float _radius;
 
         private void OnEnable()
         {
@@ -45,7 +46,7 @@ namespace Assets.Scripts.Game.Components.Systems
         {
             foreach (var prefab in _objectListPrefab.Objects)
             {
-                var position = transform.position + UnityEngine.Random.onUnitSphere * 5;
+                var position = transform.position + UnityEngine.Random.onUnitSphere * _radius;
                 var go = Instantiate(prefab, _objectsRoot);
                 go.transform.position = position;
             }
