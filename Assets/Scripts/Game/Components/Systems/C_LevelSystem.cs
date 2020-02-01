@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Components.Characters;
+﻿using Assets.Scripts.Game.Components.Bots;
+using Assets.Scripts.Game.Components.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,18 @@ namespace Assets.Scripts.Game.Components.Systems
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _characterPrefab;
+        [SerializeField] private GameObject _botPrefab;
 
         [Header("References")]
         [SerializeField] private List<Transform> _spawnPositions;
         [SerializeField] private Transform _charactersRoot;
+        [SerializeField] private Transform _botRoot;
+        [SerializeField] private C_ObjectSpawnerSystem _objectSpawnerSystem;
 
         private void OnEnable()
         {
+            _objectSpawnerSystem = FindObjectOfType<C_ObjectSpawnerSystem>();
+
 #if UNITY_EDITOR
             foreach (var gamepad in Gamepad.all)
             {
@@ -27,6 +33,9 @@ namespace Assets.Scripts.Game.Components.Systems
                 SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
             }
 #endif
+
+            SpawnBot(_botPrefab);
+            
         }
 
 
@@ -37,6 +46,20 @@ namespace Assets.Scripts.Game.Components.Systems
 
             var character = go.GetComponent<C_Character>();
             character.Control.SetGamepad(gamepad);
+        }
+
+        private void SpawnBot(GameObject prefab)
+        {
+            var go = Instantiate(prefab, _botRoot);
+            go.transform.localPosition = Vector3.zero;
+
+            var bot = go.GetComponent<C_Bot>();
+            bot.OnBotComplete += (s, e) =>
+            {
+                SpawnBot(_botPrefab);
+            };
+
+            _objectSpawnerSystem.SpawnObjectList();
         }
     }
 }
