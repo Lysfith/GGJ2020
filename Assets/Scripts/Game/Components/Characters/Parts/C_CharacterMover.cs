@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Game.Components.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         [SerializeField] private float _speed = 10;
 
+        private bool _ismoving = false;
+
+
         private void OnEnable()
         {
             _character = GetComponent<C_Character>();
@@ -23,6 +27,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             Assert.IsNotNull(_character);
             Assert.IsNotNull(_agent);
+
         }
 
         private void Update()
@@ -34,7 +39,18 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if(_character.Stats.Direction.x == 0 && _character.Stats.Direction.y == 0)
             {
+                if (_ismoving == true)
+                {
+                    _ismoving = false;
+                    SoundManager.StopFoodStepSound(this.gameObject);
+                }
                 return;
+            }
+
+            if(_ismoving == false)
+            {
+                _ismoving = true;
+                SoundManager.StartFoodStepSound(this.gameObject);
             }
 
             var newPosition = new Vector3(_character.Stats.Direction.x, 0, _character.Stats.Direction.y);
@@ -44,4 +60,5 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             transform.forward = newPosition;
         }
     }
+
 }
