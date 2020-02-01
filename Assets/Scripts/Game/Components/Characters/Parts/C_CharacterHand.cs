@@ -17,41 +17,45 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         [SerializeField] private Transform _hand;
         [SerializeField] private C_TriggerHand _triggerHand;
+        [SerializeField] private C_TriggerBot _triggerBot;
         [SerializeField] private C_Object _object;
 
         private void OnEnable()
         {
             _character = GetComponent<C_Character>();
 
-            Assert.IsNotNull(_character);
+            _triggerHand = GetComponentInChildren<C_TriggerHand>();
+            _triggerBot = GetComponentInChildren<C_TriggerBot>();
 
-            _character.Control.OnSouthButtonDown += ButtonPressed;
-            _character.Control.OnSouthButtonUp += ButtonReleased;
+            Assert.IsNotNull(_character);
+            Assert.IsNotNull(_triggerHand);
+            Assert.IsNotNull(_triggerBot);
+
+            _character.Control.OnSouthButtonUp += ButtonSouthReleased;
+            _character.Control.OnWestButtonUp += ButtonWestReleased;
 
             EnableHand();
         }
 
         private void OnDisable()
         {
-            _character.Control.OnSouthButtonDown -= ButtonPressed;
-            _character.Control.OnSouthButtonUp -= ButtonReleased;
+            _character.Control.OnSouthButtonUp -= ButtonSouthReleased;
+            _character.Control.OnWestButtonUp -= ButtonWestReleased;
         }
 
-        private void ButtonPressed(object sender, EventArgs e)
-        {
-            //if (_object != null)
-            //{
-            //    return;
-            //}
-
-            //Take();
-        }
-
-        private void ButtonReleased(object sender, EventArgs e)
+        private void ButtonWestReleased(object sender, EventArgs e)
         {
             if (_object != null)
             {
                 Throw();
+            }
+        }
+
+        private void ButtonSouthReleased(object sender, EventArgs e)
+        {
+            if (_object != null)
+            {
+                Release();
             }
             else
             {
@@ -102,7 +106,16 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
 
             _object.transform.SetParent(null);
-            _object.Release();
+
+            if (_triggerBot.CurrentBot != null)
+            {
+                _triggerBot.CurrentBot.AddPart(_object);
+            }
+            else
+            {
+                _object.Release();
+            }
+
             _object = null;
 
             EnableHand();

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Components.Characters;
+using Assets.Scripts.Game.ScriptableObjects.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Game.Components.Systems
     {
         [Header("Prefabs")]
         [SerializeField] private GameObject _boxPrefab;
+        [SerializeField] private SO_ObjectList _objectListPrefab;
 
         [Header("References")]
         [SerializeField] private Transform _objectsRoot;
@@ -29,11 +31,23 @@ namespace Assets.Scripts.Game.Components.Systems
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                for(int i = 0; i < _nbObjects; i++)
-                {
-                    var position = transform.position + UnityEngine.Random.onUnitSphere * 5;
-                    SpawnBox(position);
-                }
+                //for(int i = 0; i < _nbObjects; i++)
+                //{
+                //    var position = transform.position + UnityEngine.Random.onUnitSphere * 5;
+                //    SpawnBox(position);
+                //}
+
+                SpawnObjectList();
+            }
+        }
+
+        public void SpawnObjectList()
+        {
+            foreach (var prefab in _objectListPrefab.Objects)
+            {
+                var position = transform.position + UnityEngine.Random.onUnitSphere * 5;
+                var go = Instantiate(prefab, _objectsRoot);
+                go.transform.position = position;
             }
         }
 

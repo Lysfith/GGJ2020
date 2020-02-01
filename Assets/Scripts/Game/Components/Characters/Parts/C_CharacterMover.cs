@@ -53,11 +53,14 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 SoundManager.StartFoodStepSound(this.gameObject);
             }
 
-            var newPosition = new Vector3(_character.Stats.Direction.x, 0, _character.Stats.Direction.y);
-            newPosition = newPosition.normalized * Time.deltaTime * _speed;
-            _agent.Move(newPosition);
+            var direction = (new Vector3(_character.Stats.Direction.x, 0, _character.Stats.Direction.y)).normalized;
 
-            transform.forward = newPosition;
+            var offset = direction * Time.deltaTime * _speed;
+            _agent.Move(offset);
+
+            var directionFacing = Vector3.Slerp(transform.forward, direction, Time.deltaTime*10);
+
+            transform.forward = directionFacing;
         }
     }
 
