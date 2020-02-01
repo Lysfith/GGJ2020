@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 0}
+  _raycastDistance: 1
 --- !u!114 &7685983888463821705
 MonoBehaviour:
   m_ObjectHideFlags: 0
