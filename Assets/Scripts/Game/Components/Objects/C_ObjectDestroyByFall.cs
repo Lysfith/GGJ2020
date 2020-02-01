@@ -11,8 +11,15 @@ namespace Assets.Scripts.Game.Components.Objects
     {
         [SerializeField] private float _y;
 
+        private bool soundtriggered = false;
         private void Update()
         {
+            if(!soundtriggered && transform.position.y < _y/3)
+            {
+                soundtriggered = true;
+                SoundManager.PlaySound(SoundList.Sound.dropsmall, priority: false, pitch:UnityEngine.Random.Range(0.7f,1.3f));
+            }
+
             if(transform.position.y < _y)
             {
                 Destroy(gameObject);

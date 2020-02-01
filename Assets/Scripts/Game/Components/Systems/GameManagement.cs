@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class GameManagement : MonoBehaviour
 {
     private float _time = 0;
-    private int _startingtime = 3;
+    private int _startingtime = 4;
     private TextMeshProUGUI _tmp;
     private bool _active = true;
 
@@ -35,17 +35,33 @@ public class GameManagement : MonoBehaviour
             _time += Time.deltaTime;
             if (_time >= 1)
             {
-                _tmp.text = (_startingtime--).ToString();
                 _time = 0;
-                if (_startingtime == -1)
-                    _tmp.text = "GO";
-                if (_startingtime == -2)
+                _startingtime--;
+                switch (_startingtime)
                 {
-                    Destroy(_tmp.gameObject);
-                    _active = false;
-                    _Timer.TimerReset();
+                    case 3:
+                        _tmp.text = _startingtime.ToString();
+                        SoundManager.PlaySound(SoundList.Sound.three);
+                        break;
+                    case 2:
+                        _tmp.text = _startingtime.ToString();
+                        SoundManager.PlaySound(SoundList.Sound.two);
+                        break;
+                    case 1:
+                        _tmp.text = _startingtime.ToString();
+                        SoundManager.PlaySound(SoundList.Sound.one);
+                        break;
+                    case 0:
+                        _tmp.text = "GO";
+                        SoundManager.PlaySound(SoundList.Sound.play);
+                        break;
+                    case -1:
+                        Destroy(_tmp.gameObject);
+                        _active = false;
+                        _Timer.TimerReset();
 
-                    OnStart?.Invoke();
+                        OnStart?.Invoke();
+                        break;
                 }
             }
         }
