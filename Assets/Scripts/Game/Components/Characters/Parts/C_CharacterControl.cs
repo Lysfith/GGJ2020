@@ -16,6 +16,14 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         [SerializeField] private C_Character _character;
         [SerializeField] private Gamepad _gamepad;
 
+        public event EventHandler OnNorthButtonDown;
+        public event EventHandler OnWestButtonDown;
+        public event EventHandler OnWestButtonUp;
+        public event EventHandler OnSouthButtonDown;
+        public event EventHandler OnSouthButtonUp;
+        public event EventHandler OnEastButtonDown;
+
+
         private void OnEnable()
         {
             _character = GetComponent<C_Character>();
@@ -52,22 +60,32 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if (_gamepad.aButton.wasPressedThisFrame)
             {
-                ButtonAEvent();
+                OnSouthButtonDown?.Invoke(this, null);
+            }
+
+            if (_gamepad.aButton.wasReleasedThisFrame)
+            {
+                OnSouthButtonUp?.Invoke(this, null);
             }
 
             if (_gamepad.bButton.wasPressedThisFrame)
             {
-                ButtonBEvent();
+                OnEastButtonDown?.Invoke(this, null);
             }
 
             if (_gamepad.xButton.wasPressedThisFrame)
             {
-                ButtonXEvent();
+                OnWestButtonDown?.Invoke(this, null);
+            }
+
+            if (_gamepad.xButton.wasReleasedThisFrame)
+            {
+                OnWestButtonUp?.Invoke(this, null);
             }
 
             if (_gamepad.yButton.wasPressedThisFrame)
             {
-                ButtonYEvent();
+                OnNorthButtonDown?.Invoke(this, null);
             }
 
             if (_gamepad.leftShoulder.wasPressedThisFrame)
@@ -105,26 +123,6 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             x = -JOYSTICK_DEAD_ZONE < x && x < JOYSTICK_DEAD_ZONE ? 0 : x;
             y = -JOYSTICK_DEAD_ZONE < y && y < JOYSTICK_DEAD_ZONE ? 0 : y;
 
-
-        }
-
-        private void ButtonAEvent()
-        {
-
-        }
-
-        private void ButtonXEvent()
-        {
-
-        }
-
-        private void ButtonBEvent()
-        {
-
-        }
-
-        private void ButtonYEvent()
-        {
 
         }
 
