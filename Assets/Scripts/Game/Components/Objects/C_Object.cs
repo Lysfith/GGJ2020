@@ -23,6 +23,7 @@ namespace Assets.Scripts.Game.Components.Objects
     {
         [SerializeField] private Rigidbody _body;
         [SerializeField] private ObjectType type;
+        [SerializeField] private C_Workbench _workbench;
 
         public ObjectType ObjectType {
             get {
@@ -39,6 +40,10 @@ namespace Assets.Scripts.Game.Components.Objects
 
         public void Take()
         {
+            if(_workbench)
+            {
+                _workbench.CurrentObject = null;
+            }
             _body.isKinematic = true;
         }
 
@@ -56,12 +61,13 @@ namespace Assets.Scripts.Game.Components.Objects
         public void OnCollisionEnter(Collision collision)
         {
             var workbench = collision.collider.GetComponent<C_Workbench>();
-            if (workbench && !workbench.CurrentObject)
+            if (workbench && !workbench.CurrentObject && workbench.ObjectType == type)
             {
-                transform.parent = workbench.transform;
                 transform.rotation = workbench.transform.rotation;
-                transform.localPosition = new Vector3(0, transform.localPosition.y, 0);
+                // TODO : Change to workbench offset transform
+                transform.position = workbench.transform.position;
                 workbench.CurrentObject = this;
+                _workbench = workbench;
                 _body.isKinematic = true;
             }
         }

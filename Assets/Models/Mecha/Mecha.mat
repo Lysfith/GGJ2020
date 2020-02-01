@@ -66,8 +66,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - FresnelIntensity_: 4
-    - FresnelOpacity_: 0
+    - FresnelIntensity_: 2.77
+    - FresnelOpacity_: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -90,7 +90,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_7D8EC2B5: {r: 0, g: 0.7249274, b: 1, a: 1}
+    - Color_7D8EC2B5: {r: 1, g: 0, b: 0.20418644, a: 1}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

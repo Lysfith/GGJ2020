@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Game.Components.Objects;
+using UnityEngine.Assertions;
 
 namespace Assets.Scripts.Game.Components.Repairing
 {
@@ -12,19 +13,31 @@ namespace Assets.Scripts.Game.Components.Repairing
 
         private float _lastAngle;
         [SerializeField] private ObjectType _workbenchType;
-
-        private C_Object _currentObject;
+        [SerializeField] private C_Object _currentObject;
+        [SerializeField] private Transform _anchor;
 
         public C_Object CurrentObject {
             get {
                 return _currentObject;
             }
             set {
-                if(!_currentObject)
+                if(!_currentObject || !value)
                 {
                     _currentObject = value;
                 }
             }
+        }
+
+        public ObjectType ObjectType {
+            get {
+                return _workbenchType;
+            }
+        }
+
+        private void Start()
+        {
+            Assert.IsFalse(transform.childCount > 0);
+            _anchor = transform.GetChild(0);
         }
 
         public void OnRepair()
