@@ -34,9 +34,15 @@ namespace Assets.Scripts.Game.Components.Repairing
             }
         }
 
+        public Transform Anchor {
+            get {
+                return _anchor;
+            }
+        }
+
         private void Start()
         {
-            Assert.IsFalse(transform.childCount > 0);
+            Assert.IsTrue(transform.childCount > 0);
             _anchor = transform.GetChild(0);
         }
 

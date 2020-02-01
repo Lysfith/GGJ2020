@@ -58,9 +58,9 @@ namespace Assets.Scripts.Game.Components.Objects
             var workbench = collision.collider.GetComponent<C_Workbench>();
             if (workbench && !workbench.CurrentObject && workbench.ObjectType == _type)
             {
-                transform.rotation = workbench.transform.rotation;
+                transform.rotation = workbench.Anchor.rotation;
                 // TODO : Change to workbench offset transform
-                transform.position = workbench.transform.position;
+                transform.position = workbench.Anchor.position;
                 workbench.CurrentObject = this;
                 _workbench = workbench;
                 _body.isKinematic = true;
