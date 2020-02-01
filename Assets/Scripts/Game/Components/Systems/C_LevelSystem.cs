@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Game.Components.Systems
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Game.Components.Systems
         [SerializeField] private SO_BotDefinition _currentBotDefinition;
         [SerializeField] private List<GameObject> _boxes;
 
+
         private void OnEnable()
         {
 #if UNITY_EDITOR
@@ -44,6 +46,11 @@ namespace Assets.Scripts.Game.Components.Systems
             }
 #endif
 
+           
+        }
+
+        public void StartGame()
+        {
             SpawnBot();
         }
 
