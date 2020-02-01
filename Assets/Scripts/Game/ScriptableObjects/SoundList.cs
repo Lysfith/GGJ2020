@@ -15,7 +15,7 @@ public class SoundList : ScriptableObject
         droprobot,
         dropsmall,
         addpart,
-        
+        parachute
     }
 
     public AudioClip footstep;
@@ -26,5 +26,6 @@ public class SoundList : ScriptableObject
     public AudioClip droprobot;
     public AudioClip dropsmall;
     public AudioClip addpart;
+    public AudioClip parachute;
 
 }

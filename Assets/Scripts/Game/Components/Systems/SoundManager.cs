@@ -43,6 +43,8 @@ public static class SoundManager
             case Sound.droprobot:return sl.droprobot;
             case Sound.dropsmall: return sl.dropsmall;
             case Sound.addpart: return sl.addpart;
+            case Sound.parachute: return sl.parachute;
+
             default: Debug.LogError("Attention. Son non implemente");
                 return null;
         }
