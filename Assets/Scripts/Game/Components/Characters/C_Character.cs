@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Game.Components.Characters.Others;
 using Assets.Scripts.Game.Components.Characters.Parts;
+using Assets.Scripts.Game.Components.Characters.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Game.Components.Characters
             Assert.IsNotNull(_control);
             Assert.IsNotNull(_repair);
             Assert.IsNotNull(_hand);
+
 
             _mover.Enable();
             _control.Enable();
