@@ -9,13 +9,21 @@ using UnityEngine.Assertions;
 namespace Assets.Scripts.Game.Components.Objects
 {
 
-    public class C_RobotPart : C_Object
+    public class C_RobotPart : MonoBehaviour
     {
         [Tooltip("Number of smashes to repair")]
         [SerializeField] private int _hardness = 10;
         [SerializeField] private int _progress = 0;
 
         private Vector3 _referenceScale;
+
+        public float Hardness
+        {
+            get
+            {
+                return _hardness;
+            }
+        }
 
         public int Progress {
             get {
@@ -33,7 +41,7 @@ namespace Assets.Scripts.Game.Components.Objects
 
             }
         }
-        
+
         private void Start()
         {
             _referenceScale = transform.localScale;

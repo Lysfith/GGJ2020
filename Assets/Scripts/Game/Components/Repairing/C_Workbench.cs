@@ -13,8 +13,12 @@ namespace Assets.Scripts.Game.Components.Repairing
 
         private float _lastAngle;
         [SerializeField] private ObjectType _workbenchType;
-        [SerializeField] private C_Object _currentObject;
-        [SerializeField] private Transform _anchor;
+
+        [SerializeField] private Transform _objectPosition;
+
+        private C_Object _currentObject;
+        private C_RobotArm _currentRobotArm;
+        private C_RobotPart _currentRobotPart;
 
         public C_Object CurrentObject {
             get {
@@ -28,57 +32,107 @@ namespace Assets.Scripts.Game.Components.Repairing
             }
         }
 
-        public ObjectType ObjectType {
-            get {
-                return _workbenchType;
-            }
-        }
-
-        public Transform Anchor {
-            get {
-                return _anchor;
-            }
-        }
-
-        private void Start()
+        public bool CanTakeObject()
         {
-            Assert.IsTrue(transform.childCount > 0);
-            _anchor = transform.GetChild(0);
+            if(_currentObject == null)
+            {
+                return false;
+            }
+
+            if (_currentRobotArm != null && _currentRobotArm.Progress < 1f)
+            {
+                return false;
+            }
+
+            if (_currentRobotPart != null && _currentRobotPart.Progress < _currentRobotPart.Hardness)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public C_Object TakeObject()
+        {
+            _currentRobotArm = null;
+            _currentRobotPart = null;
+
+            return _currentObject;
         }
 
         public void OnRepair()
         {
-            if(_currentObject && _currentObject is C_RobotPart)
+            if (_currentRobotPart == null)
             {
-                if (_currentObject.ObjectType == _workbenchType)
-                {
-                    ((C_RobotPart)_currentObject).Progress++;
-                }
+                return;
             }
+
+            _currentRobotPart.Progress++;
         }
 
         public void UpdateAngle(float angle)
         {
-            if (_currentObject && _currentObject is C_RobotArm)
+            if (_currentRobotArm == null)
             {
-                float angleDelta = angle - _lastAngle;
-                // Wrap angle diff
-                if (angleDelta > Mathf.PI) angleDelta -= 2 * Mathf.PI;
-                if (angleDelta < -Mathf.PI) angleDelta += 2 * Mathf.PI;
-
-                if (Mathf.Abs(angleDelta) < MAX_ANGLE_DIFF)
-                {
-                    if (_currentObject.ObjectType == ObjectType.LEFT_ARM)
-                    {
-                        ((C_RobotArm)_currentObject).Progress += Mathf.Max(0, angleDelta) / (2 * Mathf.PI * ((C_RobotArm)_currentObject).Hardness);
-                    }
-                    else
-                    {
-                        ((C_RobotArm)_currentObject).Progress += Mathf.Max(0, -angleDelta) / (2 * Mathf.PI * ((C_RobotArm)_currentObject).Hardness);
-                    }
-                }
-                _lastAngle = angle;
+                return;
             }
+
+            float angleDelta = angle - _lastAngle;
+            // Wrap angle diff
+            if (angleDelta > Mathf.PI) angleDelta -= 2 * Mathf.PI;
+            if (angleDelta < -Mathf.PI) angleDelta += 2 * Mathf.PI;
+
+            if (Mathf.Abs(angleDelta) < MAX_ANGLE_DIFF)
+            {
+                if (_currentObject.ObjectType == ObjectType.LEFT_ARM)
+                {
+                    _currentRobotArm.Progress += Mathf.Max(0, angleDelta) / (2 * Mathf.PI * _currentRobotArm.Hardness);
+                }
+                else
+                {
+                    _currentRobotArm.Progress += Mathf.Max(0, -angleDelta) / (2 * Mathf.PI * _currentRobotArm.Hardness);
+                }
+            }
+            _lastAngle = angle;
+        }
+
+        public void OnCollisionEnter(Collision collision)
+        {
+            if (_currentObject != null)
+            {
+                return;
+            }
+
+            var obj = collision.collider.GetComponent<C_Object>();
+
+            if (obj == null || obj.ObjectType != _workbenchType)
+            {
+                return;
+            }
+
+            var robotArm = collision.collider.GetComponent<C_RobotArm>();
+            var robotPart = collision.collider.GetComponent<C_RobotPart>();
+
+            if (robotArm == null && robotPart == null)
+            {
+                return;
+            }
+
+            _currentObject = obj;
+
+            if (robotArm != null)
+            {
+                _currentRobotArm = robotArm;
+            }
+            else if (robotPart != null)
+            {
+                _currentRobotPart = robotPart;
+            }
+
+            obj.transform.SetParent(transform);
+            obj.transform.localPosition = _objectPosition.localPosition;
+            obj.transform.localRotation = _objectPosition.localRotation;
+            obj.EnterWorkbench();
 
         }
     }
