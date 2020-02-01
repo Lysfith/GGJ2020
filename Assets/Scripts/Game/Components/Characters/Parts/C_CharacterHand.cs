@@ -109,7 +109,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if (_triggerBot.CurrentBot != null)
             {
-                _triggerBot.CurrentBot.AddPart(_object);
+                _triggerBot.CurrentBot.AddPart(_object, this.gameObject);
             }
             else
             {

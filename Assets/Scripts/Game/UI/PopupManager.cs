@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Game.Components.Objects;
+﻿using Assets.Scripts;
+using Assets.Scripts.Game.Components.Objects;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

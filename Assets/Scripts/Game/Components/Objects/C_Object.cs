@@ -33,7 +33,7 @@ namespace Assets.Scripts.Game.Components.Objects
         {
             _collider.enabled = false;
             _body.isKinematic = true;
-            PopupManager.ShowTipOnPlayer(player, this.type);
+            PopupManager.ShowTipOnPlayer(player, this._type);
         }
 
         public void Release(GameObject player)
