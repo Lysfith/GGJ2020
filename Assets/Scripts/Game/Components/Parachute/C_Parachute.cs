@@ -17,6 +17,7 @@ namespace Assets.Scripts.Game.Components.Parachute
         private void OnEnable()
         {
             Assert.IsNotNull(_boxRoot);
+            SoundManager.PlaySound(SoundList.Sound.parachute);
         }
 
         private void Explosion()
@@ -32,6 +33,7 @@ namespace Assets.Scripts.Game.Components.Parachute
                     box.transform.SetParent(null);
                     box.EnablePhysic();
                     box.ApplyForce(Vector3.right * 500);
+                    SoundManager.PlaySound(SoundList.Sound.droprobot, pitch: 0.9f, delay:2);
                 }
             }
         }

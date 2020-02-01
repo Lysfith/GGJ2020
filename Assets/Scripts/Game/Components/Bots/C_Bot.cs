@@ -137,6 +137,7 @@ namespace Assets.Scripts.Game.Components.Bots
         {
             if(collision.gameObject.tag.Equals("Floor"))
             {
+                SoundManager.PlaySound(SoundList.Sound.robotclonc);
                 _body.isKinematic = true;
             }
         }

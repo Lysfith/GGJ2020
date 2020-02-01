@@ -40,7 +40,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 if (workbench)
                 {
                     _character.Mover.Disable();
-                    workbench.OnRepair();
+                    workbench.OnRepair(this.gameObject);
                     _currentWorkbench = workbench;
                     if(workbench.GetWorkbenchType() == ObjectType.LEFT_ARM || workbench.GetWorkbenchType() == ObjectType.RIGHT_ARM)
                         SoundManager.PlaySound(SoundList.Sound.workbenchturn, this.gameObject, false);
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 var direction = _character.Stats.Direction;
                 float angle = Mathf.Atan2(direction.y, direction.x);
 
-                _currentWorkbench.UpdateAngle(angle);
+                _currentWorkbench.UpdateAngle(angle,this.gameObject);
             }
         }
 

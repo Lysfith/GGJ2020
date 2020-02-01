@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Sounds/Anouncer.meta
+guid: e087828239288284a91970421c8b1201
+=======
 guid: aa2fe35cb0a757946bc0086600ea5ca9
+>>>>>>> master:Assets/Scenes/Eikins.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

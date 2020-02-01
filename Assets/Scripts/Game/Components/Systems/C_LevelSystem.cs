@@ -88,6 +88,7 @@ namespace Assets.Scripts.Game.Components.Systems
             go.transform.localPosition = Vector3.zero;
 
             var bot = go.GetComponent<C_Bot>();
+
             bot.OnBotComplete += (s, e) =>
             {
                 SpawnBot();
