@@ -6,36 +6,28 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Assets.Scripts.Game.Components.Repairing;
+using Assets.Scripts.Game.Components.Bots;
 
 namespace Assets.Scripts.Game.Components.Objects
 {
-
-    public enum ObjectType
-    {
-        HEAD,
-        CHEST,
-        LEFT_ARM,
-        RIGHT_ARM,
-        WASTE
-    }
-
     public class C_Object : MonoBehaviour
     {
         [SerializeField] private Rigidbody _body;
         [SerializeField] private ObjectType type;
         [SerializeField] private C_Workbench _workbench;
+        [SerializeField] private Collider _collider;
+        [SerializeField] private BotType _botType;
 
-        public ObjectType ObjectType {
-            get {
-                return type;
-            }
-        }
+        public ObjectType ObjectType => _type;
+        public BotType BotType => _botType;
 
         private void OnEnable()
         {
             _body = GetComponent<Rigidbody>();
+            _collider = GetComponent<Collider>();
 
             Assert.IsNotNull(_body);
+            Assert.IsNotNull(_collider);
         }
 
         public void Take()
@@ -44,16 +36,19 @@ namespace Assets.Scripts.Game.Components.Objects
             {
                 _workbench.CurrentObject = null;
             }
+            _collider.enabled = false;
             _body.isKinematic = true;
         }
 
         public void Release()
         {
+            _collider.enabled = true;
             _body.isKinematic = false;
         }
 
         public void Throw(Vector3 direction)
         {
+            _collider.enabled = true;
             _body.isKinematic = false;
             _body.AddForce(direction.normalized * 10, ForceMode.Impulse);
         }

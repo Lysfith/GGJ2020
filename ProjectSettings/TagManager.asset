@@ -17,10 +17,10 @@ TagManager:
   - Floor
   - Character
   - Object
-  - CharacterHand
+  - TriggerHand
   - Workbench
-  - 
-  - 
+  - Bot
+  - TriggerBot
   - 
   - 
   - 
