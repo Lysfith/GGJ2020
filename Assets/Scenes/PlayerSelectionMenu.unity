@@ -1017,6 +1017,92 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &353161787
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7572227441244526226, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneFaderSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526227, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7572227441244526228, guid: 1f24613e6836f8f4ab054722fa473f4a,
+        type: 3}
+      propertyPath: OnSceneLoaded.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f24613e6836f8f4ab054722fa473f4a, type: 3}
+--- !u!114 &353161788 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7572227441244526228, guid: 1f24613e6836f8f4ab054722fa473f4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 353161787}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79fad6b4d57cf44197932af19194c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &382048235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2412,6 +2498,23 @@ MonoBehaviour:
   - {fileID: 325460692}
   _startTransform: {fileID: 857732564}
   _firstEmpty: 0
+  OnStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 353161788}
+        m_MethodName: FadeOut
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: GameScene
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnBack:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &792671246
 Transform:
   m_ObjectHideFlags: 0
