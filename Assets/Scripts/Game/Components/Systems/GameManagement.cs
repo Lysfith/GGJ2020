@@ -9,7 +9,7 @@ public class GameManagement : MonoBehaviour
     private float _time = 0;
     private int _startingtime = 3;
     private TextMeshProUGUI _tmp;
-    private bool _active = true;
+    private bool _active = false;
 
     //Objets geres
     Timer _Timer;
@@ -21,10 +21,17 @@ public class GameManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+
+    }
+
+    public void StartTimer()
+    {
         _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<TextMeshProUGUI>();
         _tmp.text = "Get Ready !";
         PopupManager.Activate();
 
+        _active = true;
     }
 
     // Update is called once per frame
