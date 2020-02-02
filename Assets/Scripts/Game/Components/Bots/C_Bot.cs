@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Components.Objects;
+using Assets.Scripts.Game.Components.Systems;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -154,6 +155,7 @@ namespace Assets.Scripts.Game.Components.Bots
 
         private void BotComplete()
         {
+            C_CameraShakeSystem.Instance.Shake();
             EnableAnimation();
 
             SoundManager.PlaySound(SoundList.Sound.droprobot,priority:true);
