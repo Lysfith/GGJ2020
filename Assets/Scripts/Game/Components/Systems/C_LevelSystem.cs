@@ -2,6 +2,7 @@
 using Assets.Scripts.Game.Components.Characters;
 using Assets.Scripts.Game.Components.Objects;
 using Assets.Scripts.Game.ScriptableObjects.Bots;
+using Assets.Scripts.Game.ScriptableObjects.Characters;
 using Assets.Scripts.Game.ScriptableObjects.Objects;
 using System;
 using System.Collections;
@@ -37,6 +38,7 @@ namespace Assets.Scripts.Game.Components.Systems
         [SerializeField] private Transform _boxRoot;
         [SerializeField] private Transform _objectRoot;
         [SerializeField] private List<C_Character> _characters;
+        [SerializeField] private PlayerSlot[] _playerSlots;
 
         [Header("Properties")]
         [SerializeField] private float _timeBetweenBotAndParachute;
@@ -51,13 +53,29 @@ namespace Assets.Scripts.Game.Components.Systems
             _instance = this;
 
             _characters = new List<C_Character>();
-#if UNITY_EDITOR
-            foreach (var gamepad in Gamepad.all)
+            _boxList.Objects.Clear();
+
+            if (!_playerSlots.Where(s => s._active).Any())
             {
-                var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-                SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                foreach (var gamepad in Gamepad.all)
+                {
+                    var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
+                    SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                }
             }
-#endif
+            else
+            {
+                foreach (var slot in _playerSlots)
+                {
+                    if (!slot._active)
+                    {
+                        continue;
+                    }
+
+                    var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
+                    SpawnCharacter(slot._gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                }
+            }
         }
 
         private void Update()
@@ -110,7 +128,7 @@ namespace Assets.Scripts.Game.Components.Systems
 
             _boxes = new List<GameObject>();
             _boxes.AddRange(_currentBotDefinition.BotParts);
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 12; i++)
             {
                 _boxes.Add(_wastePrefab);
             }

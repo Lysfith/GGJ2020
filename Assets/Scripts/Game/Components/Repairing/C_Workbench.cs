@@ -24,6 +24,8 @@ namespace Assets.Scripts.Game.Components.Repairing
         private C_RobotArm _currentRobotArm;
         private C_RobotPart _currentRobotPart;
 
+        public ObjectType WorkbenchType => _workbenchType;
+
         public C_Object CurrentObject {
             get {
                 return _currentObject;

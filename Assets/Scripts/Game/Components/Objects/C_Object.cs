@@ -53,11 +53,10 @@ namespace Assets.Scripts.Game.Components.Objects
             PopupManager.RemoveTipOnPlayer(player);
         }
 
-        public void Throw(Vector3 position, Vector3 direction, GameObject player)
+        public void Throw(Vector3 direction, GameObject player)
         {
             _collider.enabled = true;
             _body.isKinematic = false;
-            transform.position = position;
             transform.SetParent(null);
             _body.AddForce(direction.normalized * 10, ForceMode.Impulse);
             PopupManager.RemoveTipOnPlayer(player);
