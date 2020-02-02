@@ -12,16 +12,17 @@ namespace Assets.Scripts
         CHEST,
         LEFT_ARM,
         RIGHT_ARM,
+        LEG,
         WASTE,
         BONUS,
         PACK,
         COMPLETED
     }
 
-    public enum BotType
+    public enum PartVersion
     {
-        None,
-        Type1
+        V1,
+        V2
     }
 
     public enum PlayerType
