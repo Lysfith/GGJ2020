@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Components.Objects;
+using Assets.Scripts.Game.Components.Systems;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,9 @@ namespace Assets.Scripts.Game.Components.Bots
         private void EndAnimation()
         {
             _callbackAtEnd?.Invoke();
+
+            C_LevelSystem.Instance.RemoveObjectFromList(gameObject.GetComponent<C_Object>());
+
             Destroy(gameObject);
         }
     }

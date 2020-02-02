@@ -1,14 +1,9 @@
 ﻿using Assets.Scripts.Game.Components.Box;
 using Assets.Scripts.Game.Components.Characters.Triggers;
 using Assets.Scripts.Game.Components.Objects;
-using Assets.Scripts.Game.Components.Repairing;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Assertions;
 
 namespace Assets.Scripts.Game.Components.Characters.Parts
@@ -20,6 +15,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         [SerializeField] private Transform _hand;
         [SerializeField] private C_TriggerHand _triggerHand;
         [SerializeField] private C_TriggerBot _triggerBot;
+        [SerializeField] private C_TriggerWorkbench _triggerWorkbench;
         [SerializeField] private C_Object _object;
         [SerializeField] private float _raycastDistance;
 
@@ -29,10 +25,12 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             _triggerHand = GetComponentInChildren<C_TriggerHand>();
             _triggerBot = GetComponentInChildren<C_TriggerBot>();
+            _triggerWorkbench = GetComponentInChildren<C_TriggerWorkbench>();
 
             Assert.IsNotNull(_character);
             Assert.IsNotNull(_triggerHand);
             Assert.IsNotNull(_triggerBot);
+            Assert.IsNotNull(_triggerWorkbench);
 
             _character.Control.OnSouthButtonUp += ButtonSouthReleased;
             _character.Control.OnWestButtonUp += ButtonWestReleased;
@@ -130,17 +128,12 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         private bool TakeFromWorkbench()
         {
-            RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(transform.position, transform.forward, out hit, _raycastDistance, LayerMask.GetMask("Workbench")))
+            if (_triggerWorkbench.CurrentWorkbench != null && _triggerWorkbench.CurrentWorkbench.CanTakeObject())
             {
-                var workbench = hit.collider.GetComponent<C_Workbench>();
-                if (workbench != null && workbench.CanTakeObject())
-                {
-                    var obj = workbench.TakeObject();
-                    Take(obj);
-                    _character.Mover.Enable();
-                }
+                var obj = _triggerWorkbench.CurrentWorkbench.TakeObject();
+                Take(obj);
+                _character.Mover.Enable();
 
                 return true;
             }
@@ -156,6 +149,11 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
 
             if (_object == null)
+            {
+                return;
+            }
+
+            if (_triggerWorkbench.CurrentWorkbench != null && _triggerWorkbench.CurrentWorkbench.WorkbenchType != _object.ObjectType)
             {
                 return;
             }
@@ -190,7 +188,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if(_object.gameObject.layer == LayerMask.NameToLayer("Waste"))
             {
-                _object.Throw(transform.position, transform.forward, this.gameObject);
+                _object.Throw(transform.forward, this.gameObject);
                 _object = null;
                 EnableHand();
                 return;
@@ -203,7 +201,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 var box = _object.GetComponent<C_Box>();
                 if (box == null)
                 {
-                    _object.Throw(transform.position, transform.forward, this.gameObject);
+                    _object.Throw(transform.forward, this.gameObject);
                 }
                 else
                 {

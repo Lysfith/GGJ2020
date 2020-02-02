@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.Components.Objects;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -45,6 +46,22 @@ namespace Assets.Scripts.Game.Components.Bots
         {
             if(part.ObjectType == ObjectType.WASTE
                 || part.BotType != _type)
+            {
+                part.Release(player);
+                return;
+            }
+
+            var robotArm = part.GetComponent<C_RobotArm>();
+            var robotPart = part.GetComponent<C_RobotPart>();
+
+            if (robotArm == null && robotPart == null)
+            {
+                part.Release(player);
+                return;
+            }
+
+            if((robotArm != null && robotArm.Progress < 1)
+                || (robotPart != null && robotPart.Progress < 100))
             {
                 part.Release(player);
                 return;
@@ -101,6 +118,27 @@ namespace Assets.Scripts.Game.Components.Bots
             }); 
         }
 
+        public void EnableAnimation()
+        {
+            var sequence = DOTween.Sequence();
+            sequence.Insert(0, transform.DOMove(-transform.forward * 7, 1));
+            sequence.InsertCallback(1, () =>
+            {
+                _collider.enabled = false;
+                _body.isKinematic = false;
+                _body.useGravity = true;
+                _body.AddForce(transform.forward * 20, ForceMode.Impulse);
+            });
+            sequence.Insert(1, transform.DORotate(new Vector3(0, 90, 0), 0.5f));
+            sequence.Insert(1.25f, transform.DORotate(new Vector3(0, 180, 0), 0.5f));
+            sequence.Insert(1.5f, transform.DORotate(new Vector3(0, 270, 0), 0.5f));
+            sequence.Insert(1.75f, transform.DORotate(new Vector3(0, 60, 0), 0.5f));
+            sequence.OnComplete(() =>
+            {
+                StartCoroutine(DestroyAfterTime());
+            });
+        }
+
         private void CheckBotCompleted()
         {
             if(!_head
@@ -116,13 +154,10 @@ namespace Assets.Scripts.Game.Components.Bots
 
         private void BotComplete()
         {
-            _collider.enabled = false;
-            _body.isKinematic = false;
-            _body.useGravity = true;
+            EnableAnimation();
+
             SoundManager.PlaySound(SoundList.Sound.droprobot,priority:true);
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
-
-            StartCoroutine(DestroyAfterTime());
         }
 
         private IEnumerator DestroyAfterTime()
