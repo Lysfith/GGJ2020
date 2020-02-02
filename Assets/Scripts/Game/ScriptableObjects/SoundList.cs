@@ -26,7 +26,7 @@ public class SoundList : ScriptableObject
         login,
         select,
         ready,
-        start
+        start,
         glou,
         cucaracha,
         accel,
