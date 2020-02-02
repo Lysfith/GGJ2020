@@ -207,7 +207,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 }
                 else
                 {
-                    box.Open();
+                    box.Open(this.gameObject);
                 }
 
                 _object = null;
