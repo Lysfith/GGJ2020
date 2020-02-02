@@ -12,7 +12,8 @@ namespace Assets.Scripts
         CHEST,
         LEFT_ARM,
         RIGHT_ARM,
-        WASTE
+        WASTE,
+        BONUS
     }
 
     public enum BotType
