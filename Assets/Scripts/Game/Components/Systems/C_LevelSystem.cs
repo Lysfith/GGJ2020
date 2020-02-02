@@ -56,7 +56,8 @@ namespace Assets.Scripts.Game.Components.Systems
         [SerializeField] private List<GameObject> _boxes;
         [SerializeField] private bool _isEnabled;
         [SerializeField] private bool _isRecyclingStep;
-        [SerializeField] private Material _botMaterial;
+        [SerializeField] private Material _botMaterialV1;
+        [SerializeField] private Material _botMaterialV2;
         [SerializeField] private C_Bot _bot;
 
 
@@ -146,6 +147,11 @@ namespace Assets.Scripts.Game.Components.Systems
             {
                 _boxes.Add(GetWastePart());
             }
+
+            _boxes.Add(GetGOFromTypeAndVersion(ObjectType.HEAD, _bot.Parts[ObjectType.HEAD]));
+            _boxes.Add(GetGOFromTypeAndVersion(ObjectType.CHEST, _bot.Parts[ObjectType.CHEST]));
+            _boxes.Add(GetGOFromTypeAndVersion(ObjectType.LEFT_ARM, _bot.Parts[ObjectType.LEFT_ARM]));
+            _boxes.Add(GetGOFromTypeAndVersion(ObjectType.RIGHT_ARM, _bot.Parts[ObjectType.RIGHT_ARM]));
         }
 
         private GameObject GetWastePart()
@@ -241,25 +247,39 @@ namespace Assets.Scripts.Game.Components.Systems
             var partObject = part.GetComponent<C_Object>();
             var isValid = _bot.Parts[partObject.ObjectType] == partObject.Version;
 
-            var newMaterial = new Material(_botMaterial);
+            var renderer = part.GetComponentInChildren<Renderer>(true);
 
-            newMaterial.SetColor("Color_F5B15491", isValid ? _currentColor : GetOtherColorRandom());
-            newMaterial.SetFloat("FresnelOpacity_", isValid ? 1 : 0);
+            //Material newMaterial = null;
 
-            var renderers = part.GetComponentsInChildren<Renderer>(true);
+            //if (partObject.Version == PartVersion.V1)
+            //{
+            //    newMaterial = new Material(_botMaterialV1);
+            //}
+            //else
+            //{
+            //    newMaterial = new Material(_botMaterialV2);
+            //}
 
-            foreach (var renderer in renderers)
-            {
-                var material = renderer.materials.Where(i => i.name == "Color2").FirstOrDefault();
+            renderer.materials[0].SetColor("Color_F5B15491", isValid ? _currentColor : GetOtherColorRandom());
+            renderer.materials[0].SetFloat("FresnelOpacity_", isValid ? 1 : 0);
 
-                if (material == null)
-                {
-                    continue;
-                }
+            
 
-                var index = Array.IndexOf(renderer.materials, material);
-                renderer.materials[index] = newMaterial;
-            }
+            //var renderers = part.GetComponentsInChildren<Renderer>(true);
+            
+
+            //foreach (var renderer in renderers)
+            //{
+            //    var material = renderer.materials.Where(i => i.name == "Color2").FirstOrDefault();
+
+            //    if (material == null)
+            //    {
+            //        continue;
+            //    }
+
+            //    var index = Array.IndexOf(renderer.materials, material);
+            //    renderer.materials[index] = newMaterial;
+            //}
 
             _boxes.RemoveAt(randPart);
 
