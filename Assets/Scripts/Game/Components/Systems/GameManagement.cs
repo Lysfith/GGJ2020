@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.Assertions;
 
 public class GameManagement : MonoBehaviour
 {
@@ -80,11 +81,36 @@ public class GameManagement : MonoBehaviour
         _tmp.text = "Fini !!";
 
         OnEnd?.Invoke();
+        if (Resources.Load<HighScore>("HighScore").score[19] <= _Counter._count)
+        {
+            Instantiate(Resources.Load<GameObject>("InputField (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform);
+        }
 
-        StartCoroutine(WaitForClose());
+        //StartCoroutine(WaitForClose());
         //Application.Quit();
 
     }
+
+    public void SendHighScore(TMP_InputField name)
+    {
+        if (name.text == "")
+            name.text = "Mr. Default";
+        HighScore hs = Resources.Load<HighScore>("HighScore");
+        int i = 0;
+        while (hs.score[i] > _Counter._count && i<20)
+             i++;
+
+        for (int j = 19; j > i ; j--)
+        {
+            hs.score[j] = hs.score[j-1];
+            hs.joueur[j] = hs.joueur[j-1];
+        }
+        hs.score[i] = _Counter._count;
+        hs.joueur[i] = name.text;
+        Destroy(name.gameObject);
+
+    }
+
     IEnumerator WaitForClose()
     {
         yield return new WaitForSeconds(5);

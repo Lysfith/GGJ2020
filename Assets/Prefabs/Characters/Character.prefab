@@ -308,7 +308,7 @@ MonoBehaviour:
   _triggerHand: {fileID: 3139070106436771560}
   _triggerBot: {fileID: 0}
   _object: {fileID: 0}
-  _raycastDistance: 3
+  _raycastDistance: 2
 --- !u!82 &796068388
 AudioSource:
   m_ObjectHideFlags: 0

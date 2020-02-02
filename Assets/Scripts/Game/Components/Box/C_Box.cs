@@ -32,9 +32,7 @@ namespace Assets.Scripts.Game.Components.Box
         {
             SoundManager.PlaySound(SoundList.Sound.boxopen, player);
             var levelSystem = FindObjectOfType<C_LevelSystem>();
-            levelSystem.SpawnBoxObject(transform.position);
-
-            Destroy(gameObject);
+            levelSystem.SpawnBoxObject(gameObject);
         }
 
         private void OnCollisionEnter(Collision collision)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Game.Components.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace Assets.Scripts.Game.Components.Objects
 
             if(transform.position.y < _y)
             {
+                C_LevelSystem.Instance.RemoveObjectFromList(gameObject.GetComponent<C_Object>());
+
                 Destroy(gameObject);
             }
         }
