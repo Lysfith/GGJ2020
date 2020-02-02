@@ -16,6 +16,16 @@ namespace Assets.Scripts.Game.Components.Bots
     {
         [SerializeField] private Collider _collider;
         [SerializeField] private Rigidbody _body;
+        [SerializeField] private Animator _animator;
+
+        [Header("References")]
+        [SerializeField] private List<GameObject> _heads;
+        [SerializeField] private List<GameObject> _chests;
+        [SerializeField] private List<GameObject> _leftArms;
+        [SerializeField] private List<GameObject> _rightArms;
+        [SerializeField] private List<GameObject> _legs;
+        [SerializeField] private Material _materialV1;
+        [SerializeField] private Material _materialV2;
 
         [Header("Positions")]
         [SerializeField] private Transform _headPosition;
@@ -30,7 +40,9 @@ namespace Assets.Scripts.Game.Components.Bots
         [SerializeField] private bool _chest;
 
         [Header("Properties")]
-        [SerializeField] private BotType _type;
+        [SerializeField] private Dictionary<ObjectType, PartVersion> _parts;
+
+        public Dictionary<ObjectType, PartVersion> Parts => _parts;
 
         public event EventHandler OnBotComplete;
 
@@ -38,15 +50,77 @@ namespace Assets.Scripts.Game.Components.Bots
         {
             _collider = GetComponent<Collider>();
             _body = GetComponent<Rigidbody>();
+            _animator = GetComponentInChildren<Animator>();
 
             Assert.IsNotNull(_collider);
             Assert.IsNotNull(_body);
+            Assert.IsNotNull(_animator);
+
+            _heads.ForEach((i) => { i.SetActive(false); });
+            _chests.ForEach((i) => { i.SetActive(false); });
+            _leftArms.ForEach((i) => { i.SetActive(false); });
+            _rightArms.ForEach((i) => { i.SetActive(false); });
+            _legs.ForEach((i) => { i.SetActive(false); });
+
+            _parts = new Dictionary<ObjectType, PartVersion>();
+        }
+
+        public void Init(Dictionary<ObjectType, PartVersion> parts, Color color)
+        {
+            _parts = parts;
+
+            var newMaterialV1 = _materialV1; // new Material(_materialV1);
+            var newMaterialV2 = _materialV2; // new Material(_materialV2);
+
+            newMaterialV1.SetColor("Color_F5B15491", color);
+            newMaterialV1.SetFloat("FresnelOpacity_", 0);
+
+            newMaterialV2.SetColor("Color_F5B15491", color);
+            newMaterialV2.SetFloat("FresnelOpacity_", 0);
+
+            var renderers = GetComponentsInChildren<Renderer>(true);
+           
+            foreach (var renderer in renderers)
+            {
+                var materialV1 = renderer.materials.Where(i => i.name == "Color2_V1").FirstOrDefault();
+                var materialV2 = renderer.materials.Where(i => i.name == "Color2_V2").FirstOrDefault();
+
+                if (materialV1 != null)
+                {
+                    var index = Array.IndexOf(renderer.materials, materialV1);
+                    renderer.materials[index] = newMaterialV1;
+                }
+                else if (materialV2 != null)
+                {
+                    var index = Array.IndexOf(renderer.materials, materialV2);
+                    renderer.materials[index] = newMaterialV2;
+                }
+
+            }
+
+            var leg = GetGOFromTypeAndVersion(ObjectType.LEG, _parts[ObjectType.LEG]);
+            leg.SetActive(true);
+        }
+
+        public GameObject GetGOFromTypeAndVersion(ObjectType type, PartVersion version)
+        {
+            var intVersion = (int)version;
+            switch (type)
+            {
+                case ObjectType.HEAD: return _heads.ElementAt(intVersion);
+                case ObjectType.CHEST: return _chests.ElementAt(intVersion);
+                case ObjectType.LEFT_ARM: return _leftArms.ElementAt(intVersion);
+                case ObjectType.RIGHT_ARM: return _rightArms.ElementAt(intVersion);
+                case ObjectType.LEG: return _legs.ElementAt(intVersion);
+            }
+
+            return null;
         }
 
         public void AddPart(C_Object part, GameObject player)
         {
             if(part.ObjectType == ObjectType.WASTE
-                || part.BotType != _type)
+                || _parts[part.ObjectType] != part.Version)
             {
                 part.Release(player);
                 return;
@@ -114,26 +188,26 @@ namespace Assets.Scripts.Game.Components.Bots
             var botPartAnim = part.gameObject.AddComponent<C_BotPartAnimation>();
             botPartAnim.Init(partDestination, () =>
             {
-                partDestination.gameObject.SetActive(true);
+                var go = GetGOFromTypeAndVersion(part.ObjectType, part.Version);
+                go.SetActive(true);
                 CheckBotCompleted();
             }); 
         }
 
         public void EnableAnimation()
         {
+            //_animator.SetTrigger("Walking");
+
             var sequence = DOTween.Sequence();
             sequence.Insert(0, transform.DOMove(-transform.forward * 7, 1));
             sequence.InsertCallback(1, () =>
             {
+                //_animator.SetTrigger("Jumping");
                 _collider.enabled = false;
                 _body.isKinematic = false;
                 _body.useGravity = true;
                 _body.AddForce(transform.forward * 20, ForceMode.Impulse);
             });
-            sequence.Insert(1, transform.DORotate(new Vector3(0, 90, 0), 0.5f));
-            sequence.Insert(1.25f, transform.DORotate(new Vector3(0, 180, 0), 0.5f));
-            sequence.Insert(1.5f, transform.DORotate(new Vector3(0, 270, 0), 0.5f));
-            sequence.Insert(1.75f, transform.DORotate(new Vector3(0, 60, 0), 0.5f));
             sequence.OnComplete(() =>
             {
                 StartCoroutine(DestroyAfterTime());

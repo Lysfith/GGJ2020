@@ -27,6 +27,11 @@ public class SoundList : ScriptableObject
         select,
         ready,
         start
+        glou,
+        cucaracha,
+        accel,
+        decel,
+        elec
     }
 
     public AudioClip footstep;
@@ -49,6 +54,11 @@ public class SoundList : ScriptableObject
     public AudioClip select;
     public AudioClip ready;
     public AudioClip start;
+    public AudioClip glou;
+    public AudioClip cucaracha;
+    public AudioClip accel;
+    public AudioClip decel;
+    public AudioClip elec;
 
 
 }
