@@ -78,7 +78,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         public void Take()
         {
-            if(!_isEnabled)
+            if (!_isEnabled)
             {
                 return;
             }
@@ -87,7 +87,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             {
                 var objects = _triggerHand.GetObjects();
 
-                if(!objects.Any())
+                if (!objects.Any())
                 {
                     return;
                 }
@@ -95,10 +95,10 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 float min = float.MaxValue;
                 C_Object objMin = null;
 
-                foreach(var obj in objects)
+                foreach (var obj in objects)
                 {
                     var distance = Vector3.Distance(transform.position, obj.transform.position);
-                    if(distance < min)
+                    if (distance < min)
                     {
                         min = distance;
                         objMin = obj;
@@ -108,7 +108,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 Take(objMin);
             }
 
-            
+
         }
 
         private void Take(C_Object obj)
@@ -188,20 +188,37 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 return;
             }
 
-            var box = _object.GetComponent<C_Box>();
-            if(box == null)
+            if(_object.gameObject.layer == LayerMask.NameToLayer("Waste"))
             {
-                _object.transform.SetParent(null);
-                _object.Throw(transform.forward, this.gameObject);
-            }
-            else
-            {
-                box.Open();
+                _object.Throw(transform.position, transform.forward, this.gameObject);
+                _object = null;
+                EnableHand();
+                return;
             }
 
-            _object = null;
+            var hits = Physics.RaycastAll(_character.transform.position + Vector3.up, transform.forward, _raycastDistance, LayerMask.GetMask("Wall", "WallObjectWaste"));
 
-            EnableHand();
+            if (!hits.Any())
+            {
+                var box = _object.GetComponent<C_Box>();
+                if (box == null)
+                {
+                    _object.Throw(transform.position, transform.forward, this.gameObject);
+                }
+                else
+                {
+                    box.Open(this.gameObject);
+                }
+
+                _object = null;
+
+                EnableHand();
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Debug.DrawRay(_character.transform.position + Vector3.up, transform.forward * _raycastDistance);
         }
     }
 }

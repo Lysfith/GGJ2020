@@ -16,6 +16,14 @@ MonoBehaviour:
   footstepalt: {fileID: 8300000, guid: 0fb5b28a8cfcbd1439b767587307a3c9, type: 3}
   workbenchtap: {fileID: 8300000, guid: 04a1123959d3ec0478534d859a553c6f, type: 3}
   workbenchturn: {fileID: 8300000, guid: b1c39005c50e79f488a1b50daa185b99, type: 3}
+  workbenchok: {fileID: 8300000, guid: d20e936af50d67e4889313964f271664, type: 3}
   droprobot: {fileID: 8300000, guid: c52f7e6a2fb8c794785bb7ea01a01d80, type: 3}
   dropsmall: {fileID: 8300000, guid: ed5030134e0846743acdaed52cfdb3a2, type: 3}
   addpart: {fileID: 8300000, guid: 3eec14c02382e864fb022a6d304a74a3, type: 3}
+  parachute: {fileID: 8300000, guid: 4a7bb432eb6acd647a92b7292187a1ca, type: 3}
+  robotclonc: {fileID: 8300000, guid: a4feac46a6cac6b4182479cae5ec2d56, type: 3}
+  boxopen: {fileID: 8300000, guid: fec3df21e8ad9944c9ef0add0a889b49, type: 3}
+  one: {fileID: 8300000, guid: d0991d1f49cfc734eaf779bb35e7c26e, type: 3}
+  two: {fileID: 8300000, guid: 7caf9db894f62424db8609e80d0e91af, type: 3}
+  three: {fileID: 8300000, guid: 173f13a4ee2b26e449fc1bab8632369f, type: 3}
+  play: {fileID: 8300000, guid: 7004fe16356585a4782b7daf7550e9e9, type: 3}

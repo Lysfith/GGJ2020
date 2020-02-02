@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Game.Components.Objects;
 using UnityEngine.Assertions;
+using static SoundList;
 
 namespace Assets.Scripts.Game.Components.Repairing
 {
@@ -81,7 +82,7 @@ namespace Assets.Scripts.Game.Components.Repairing
             _renderer.materials[1].SetVector("_EmissionColor", color * LED_INTENSITY);
         }
 
-        public void OnRepair()
+        public void OnRepair(GameObject player)
         {
             if (_currentRobotPart == null)
             {
@@ -91,10 +92,11 @@ namespace Assets.Scripts.Game.Components.Repairing
             if(_currentRobotPart.Progress == _currentRobotPart.Hardness)
             {
                 ChangeLEDColor(new Color(.04f, 1f, 0));
+                SoundManager.PlaySound(Sound.workbenchok,player,true);
             }
         }
 
-        public void UpdateAngle(float angle)
+        public void UpdateAngle(float angle, GameObject player)
         {
             if (_currentRobotArm == null)
             {
@@ -121,6 +123,7 @@ namespace Assets.Scripts.Game.Components.Repairing
             if (_currentRobotArm.Progress == 1.0f)
             {
                 ChangeLEDColor(new Color(.04f, 1f, 0));
+                SoundManager.PlaySound(Sound.workbenchok, player, true);
             }
 
             _lastAngle = angle;

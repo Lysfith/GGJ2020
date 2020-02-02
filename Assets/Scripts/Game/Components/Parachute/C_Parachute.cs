@@ -1,5 +1,8 @@
 ﻿using Assets.Scripts.Game.Components.Box;
+using Assets.Scripts.Game.Components.Objects;
 using Assets.Scripts.Game.Components.Others;
+using Assets.Scripts.Game.Components.Systems;
+using Assets.Scripts.Game.ScriptableObjects.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +20,7 @@ namespace Assets.Scripts.Game.Components.Parachute
         private void OnEnable()
         {
             Assert.IsNotNull(_boxRoot);
+            SoundManager.PlaySound(SoundList.Sound.parachute);
         }
 
         private void Explosion()
@@ -32,6 +36,9 @@ namespace Assets.Scripts.Game.Components.Parachute
                     box.transform.SetParent(null);
                     box.EnablePhysic();
                     box.ApplyForce(Vector3.right * 500);
+
+                    C_LevelSystem.Instance.AddObjectToList(boxTransform.GetComponent<C_Object>());
+                    SoundManager.PlaySound(SoundList.Sound.droprobot, pitch: 0.9f, delay:2);
                 }
             }
         }

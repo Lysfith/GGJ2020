@@ -28,12 +28,11 @@ namespace Assets.Scripts.Game.Components.Box
             _body.AddForce(force);
         }
 
-        public void Open()
+        public void Open(GameObject player)
         {
+            SoundManager.PlaySound(SoundList.Sound.boxopen, player);
             var levelSystem = FindObjectOfType<C_LevelSystem>();
-            levelSystem.SpawnBoxObject(transform.position);
-
-            Destroy(gameObject);
+            levelSystem.SpawnBoxObject(gameObject);
         }
 
         private void OnCollisionEnter(Collision collision)

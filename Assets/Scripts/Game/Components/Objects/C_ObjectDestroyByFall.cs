@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Game.Components.Systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,19 @@ namespace Assets.Scripts.Game.Components.Objects
     {
         [SerializeField] private float _y;
 
+        private bool soundtriggered = false;
         private void Update()
         {
+            if(!soundtriggered && transform.position.y < _y/3)
+            {
+                soundtriggered = true;
+                SoundManager.PlaySound(SoundList.Sound.dropsmall, priority: false, pitch:UnityEngine.Random.Range(0.7f,1.3f));
+            }
+
             if(transform.position.y < _y)
             {
+                C_LevelSystem.Instance.RemoveObjectFromList(gameObject.GetComponent<C_Object>());
+
                 Destroy(gameObject);
             }
         }

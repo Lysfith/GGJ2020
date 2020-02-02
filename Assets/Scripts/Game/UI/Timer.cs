@@ -5,6 +5,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    public float _timeMax = 600;
     public float _time = 60;
     public int _timetoadd = 30;
     private bool end = true;
@@ -37,7 +38,7 @@ public class Timer : MonoBehaviour
 
     public void TimerReset(float t = 60)
     {
-        _time = 60;
+        _time = _timeMax;
         end = false;
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Canvas
   - Workbench
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -24,8 +25,8 @@ TagManager:
   - TriggerBot
   - Wall
   - PostProcessing
-  - 
-  - 
+  - Waste
+  - WallObjectWaste
   - 
   - 
   - 
