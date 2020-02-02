@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static SoundList;
-public static class SoundManager 
+public static class SoundManager
 {
     static public void StartFoodStepSound(GameObject player)
     {
@@ -52,8 +52,8 @@ public static class SoundManager
         source.clip = GetAudioClip(sound);
         source.pitch = pitch;
         source.Play(delay);
-        
-        
+
+
     }
 
 
@@ -79,6 +79,11 @@ public static class SoundManager
             case Sound.one: return sl.one;
             case Sound.two: return sl.two;
             case Sound.three: return sl.three;
+            case Sound.error: return sl.error;
+            case Sound.login: return sl.login;
+            case Sound.select: return sl.select;
+            case Sound.ready: return sl.ready;
+            case Sound.start: return sl.start;
             case Sound.glou: return sl.glou;
             case Sound.cucaracha: return sl.cucaracha;
             case Sound.accel: return sl.accel;

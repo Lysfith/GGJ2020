@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Player Models
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 1961542622890791847, guid: 8cdad54d88c98e44b99926007c575069, type: 3}
-  - {fileID: 5063328208188673769, guid: 194856c7e20fb51438df2ee184b39838, type: 3}
-  - {fileID: 5916059824181418279, guid: 3bfbf9c5bace6394d8ad6256752e6db1, type: 3}
+  - {fileID: 7517687059086031252, guid: 08360b573c1269d48ad677d79c1be586, type: 3}
+  - {fileID: 7517687059086031252, guid: 5b0e16193da9dea4d99728bd625f7856, type: 3}
+  - {fileID: 7517687059086031252, guid: 0c1115352becdc24ba26f78308c8b16e, type: 3}
+  - {fileID: 7517687059086031252, guid: af9638ad7a4987a46907db245d7a6a70, type: 3}
