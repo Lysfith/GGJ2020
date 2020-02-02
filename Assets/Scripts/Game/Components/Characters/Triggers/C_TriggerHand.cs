@@ -24,7 +24,7 @@ namespace Assets.Scripts.Game.Components.Characters.Triggers
 
         public IEnumerable<C_Object> GetObjects()
         {
-            var colliders = Physics.OverlapSphere(transform.position, 1, LayerMask.GetMask("Object"));
+            var colliders = Physics.OverlapSphere(transform.position, 1, LayerMask.GetMask("Object", "Waste"));
             return colliders.Select(c => c.GetComponent<C_Object>()).ToList();
         }
     }
