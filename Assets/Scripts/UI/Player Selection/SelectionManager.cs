@@ -7,9 +7,12 @@ using Assets.Scripts;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Assets.Scripts.Global.Components;
 
 public class SelectionManager : MonoBehaviour
 {
+
+    private const float BACK_PRESS_TIME = 2f;
 
     public RectTransform[] _playerUISlots;
     public PlayerSlot[] _playerSlots;
@@ -18,15 +21,25 @@ public class SelectionManager : MonoBehaviour
     public Transform[] _playerTransforms;
     public Transform _startTransform;
 
+    public Image _backImage;
+
     public Dictionary<Gamepad, int> _gamepadSlots;
     public int _firstEmpty;
 
     public UnityEvent OnStart;
     public UnityEvent OnBack;
 
+    public S_SceneFaderSystem _sceneFader;
+
+    private float _backTimePressed;
+    private bool _readyToStart;
+    private bool _locked;
+
     private void Start()
     {
         _gamepadSlots = new Dictionary<Gamepad, int>();
+        _readyToStart = false;
+        _locked = false;
         foreach (var playerSlot in _playerSlots)
         {
             playerSlot._active = false;
@@ -38,10 +51,31 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
+
+        bool backPressed = false;
+
+        if (_locked) return;
+
         foreach (var gamepad in Gamepad.all)
         {
+
+            if(gamepad.buttonEast.isPressed)
+            {
+                if(!_gamepadSlots.ContainsKey(gamepad))
+                {
+                    backPressed = true;
+                }
+            }
+
             if (gamepad.buttonSouth.wasPressedThisFrame)
             {
+                if(_readyToStart)
+                {
+                    _locked = true;
+                    OnStart?.Invoke();
+                    return;
+                }
+
                 if (_gamepadSlots.TryGetValue(gamepad, out int gamepadSlot))
                 {
                     PlayerReady(gamepadSlot);
@@ -52,10 +86,6 @@ public class SelectionManager : MonoBehaviour
                 if (_gamepadSlots.TryGetValue(gamepad, out int gamepadSlot))
                 {
                     PlayerLeave(gamepadSlot);
-                }
-                else
-                {
-                    Back();
                 }
             }
             else if (gamepad.startButton.wasPressedThisFrame && _firstEmpty < _playerUISlots.Length) {
@@ -79,11 +109,31 @@ public class SelectionManager : MonoBehaviour
             }
 
         }
+
+        if(backPressed)
+        {
+            _backTimePressed += Time.deltaTime;
+            if(_backTimePressed > BACK_PRESS_TIME)
+            {
+                Back();
+            }
+        } else
+        {
+            _backTimePressed = 0.0f;
+        }
+
+        _backImage.fillAmount = _backTimePressed / BACK_PRESS_TIME;
+    }
+
+    public void ReadyToStart()
+    {
+        _readyToStart = true;
     }
 
     private void Back()
     {
         OnBack?.Invoke();
+        _sceneFader.FadeOut("MainMenu", .2f);
     }
 
     private void ChangeModel(int slot, int modelIndex)
@@ -126,6 +176,7 @@ public class SelectionManager : MonoBehaviour
                 img.fillAmount = 0.0f;
             }
             _startTransform.Find("GO").gameObject.SetActive(false);
+            _readyToStart = false;
         }
         /*if (_firstEmpty < _playerUISlots.Length)
         {
@@ -158,8 +209,6 @@ public class SelectionManager : MonoBehaviour
         {
             _startTransform.gameObject.SetActive(true);
             _startTransform.GetComponent<FillEffect>().Play();
-
-            OnStart?.Invoke();
         }
     }
 
@@ -180,6 +229,7 @@ public class SelectionManager : MonoBehaviour
                     img.fillAmount = 0.0f;
                 }
                 _startTransform.Find("GO").gameObject.SetActive(false);
+                _readyToStart = false;
             }
 
         }

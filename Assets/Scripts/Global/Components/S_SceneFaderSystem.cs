@@ -41,17 +41,22 @@ namespace Assets.Scripts.Global.Components
 
         public void FadeOut(string scene)
         {
-            StartCoroutine(FadeOutPrivate(scene));
+            StartCoroutine(FadeOutPrivate(scene, 1f));
         }
 
-        private IEnumerator FadeOutPrivate(string scene)
+        public void FadeOut(string scene, float duration)
+        {
+            StartCoroutine(FadeOutPrivate(scene, duration));
+        }
+
+        private IEnumerator FadeOutPrivate(string scene, float duration)
         {
             var time = 0f;
 
-            while (time < 1f)
+            while (time < duration)
             {
                 time += Time.deltaTime;
-                var a = _curve.Evaluate(time);
+                var a = _curve.Evaluate(time / duration);
                 _canvasGroup.alpha = a;
                 yield return 0;
             }
