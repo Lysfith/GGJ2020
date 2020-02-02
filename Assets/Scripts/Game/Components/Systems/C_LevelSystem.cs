@@ -2,6 +2,7 @@
 using Assets.Scripts.Game.Components.Characters;
 using Assets.Scripts.Game.Components.Objects;
 using Assets.Scripts.Game.ScriptableObjects.Bots;
+using Assets.Scripts.Game.ScriptableObjects.Characters;
 using Assets.Scripts.Game.ScriptableObjects.Objects;
 using System;
 using System.Collections;
@@ -32,11 +33,13 @@ namespace Assets.Scripts.Game.Components.Systems
 
         [Header("References")]
         [SerializeField] private List<Transform> _spawnPositions;
+        [SerializeField] private List<Transform> _endPositions;
         [SerializeField] private Transform _charactersRoot;
         [SerializeField] private Transform _botRoot;
         [SerializeField] private Transform _boxRoot;
         [SerializeField] private Transform _objectRoot;
         [SerializeField] private List<C_Character> _characters;
+        [SerializeField] private PlayerSlot[] _playerSlots;
 
         [Header("Properties")]
         [SerializeField] private float _timeBetweenBotAndParachute;
@@ -51,13 +54,30 @@ namespace Assets.Scripts.Game.Components.Systems
             _instance = this;
 
             _characters = new List<C_Character>();
-#if UNITY_EDITOR
-            foreach (var gamepad in Gamepad.all)
+            _boxList.Objects.Clear();
+
+            if (!_playerSlots.Where(s => s._active).Any())
             {
-                var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-                SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                for (int i = 0; i < Gamepad.all.Count; i++)
+                {
+                    var gamepad = Gamepad.all[i];
+                    var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
+                    SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                }
             }
-#endif
+            else
+            {
+                for (int i = 0; i < _playerSlots.Count(); i++)
+                {
+                    var slot = _playerSlots[i];
+                    if (!slot._active)
+                    {
+                        continue;
+                    }
+
+                    SpawnCharacter(slot._gamepad, _characterPrefab, _spawnPositions.ElementAt(i).position);
+                }
+            }
         }
 
         private void Update()
@@ -82,10 +102,12 @@ namespace Assets.Scripts.Game.Components.Systems
         {
             _isEnabled = false;
 
-            foreach (var character in _characters)
+            for (int i = 0; i < _characters.Count; i++)
             {
+                var character = _characters[i];
                 character.Control.Disable();
                 character.Mover.Disable();
+                character.Mover.MoveTo(_endPositions[i].position);
             }
         }
 
@@ -110,7 +132,7 @@ namespace Assets.Scripts.Game.Components.Systems
 
             _boxes = new List<GameObject>();
             _boxes.AddRange(_currentBotDefinition.BotParts);
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 12; i++)
             {
                 _boxes.Add(_wastePrefab);
             }
@@ -134,7 +156,7 @@ namespace Assets.Scripts.Game.Components.Systems
             bot.OnBotComplete += (s, e) =>
             {
                 var layerWaste = LayerMask.NameToLayer("Waste");
-                foreach(var box in _boxList.Objects)
+                foreach (var box in _boxList.Objects)
                 {
                     box.gameObject.layer = layerWaste;
                 }
@@ -165,6 +187,13 @@ namespace Assets.Scripts.Game.Components.Systems
             RemoveObjectFromList(boxClosed.GetComponent<C_Object>());
             AddObjectToList(box.GetComponent<C_Object>());
             AddObjectToList(part.GetComponent<C_Object>());
+
+            if(_isRecyclingStep)
+            {
+                var layerWaste = LayerMask.NameToLayer("Waste");
+                box.layer = layerWaste;
+                part.layer = layerWaste;
+            }
 
             Destroy(boxClosed);
         }

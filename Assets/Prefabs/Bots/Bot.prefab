@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 0}
   _body: {fileID: 0}
+  _animator: {fileID: 0}
   _headPosition: {fileID: 0}
   _leftArmPosition: {fileID: 0}
   _rightArmPosition: {fileID: 0}

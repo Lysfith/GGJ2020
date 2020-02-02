@@ -25,6 +25,8 @@ namespace Assets.Scripts.Game.Components.Parachute
 
         private void Explosion()
         {
+            C_CameraShakeSystem.Instance.Shake();
+
             for (var i = 0; i < _boxRoot.transform.childCount; i++)
             {
                 var boxTransform = _boxRoot.transform.GetChild(i);
