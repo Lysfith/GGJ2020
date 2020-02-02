@@ -62,7 +62,7 @@ namespace Assets.Scripts.Game.Components.Bots
             }
 
             if((robotArm != null && robotArm.Progress < 1)
-                || (robotPart != null && robotPart.Progress < 100))
+                || (robotPart != null && robotPart.Progress < robotPart.Hardness))
             {
                 part.Release(player);
                 return;
