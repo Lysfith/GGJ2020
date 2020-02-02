@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Game.ScriptableObjects.Bots
 {
-    [CreateAssetMenu(fileName = "NewBotDefinitionList", menuName = "Game/Bots/BotDefinitionList")]
-    public class SO_BotDefinitionList : ScriptableObject
-    {
-        public List<SO_BotDefinition> Bots;
-    }
+    //[CreateAssetMenu(fileName = "NewBotDefinitionList", menuName = "Game/Bots/BotDefinitionList")]
+    //public class SO_BotDefinitionList : ScriptableObject
+    //{
+    //    public List<SO_BotDefinition> Bots;
+    //}
 }

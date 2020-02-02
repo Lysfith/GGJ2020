@@ -73,6 +73,8 @@ public class GameManagement : MonoBehaviour
                 }
             }
         }
+        if (PopupManager._Isactive && _Timer._time < (_Timer._timeMax/4)*3)
+            PopupManager.Deactivate();
     }
 
     public void EndGame()
@@ -86,8 +88,8 @@ public class GameManagement : MonoBehaviour
             Instantiate(Resources.Load<GameObject>("InputField (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform);
         }
 
-        //StartCoroutine(WaitForClose());
-        //Application.Quit();
+        StartCoroutine(WaitForClose());
+        UnityEngine.SceneManagement.SceneManager.LoadScene("PlayerSelectionMenu");
 
     }
 
@@ -113,7 +115,7 @@ public class GameManagement : MonoBehaviour
 
     IEnumerator WaitForClose()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
     }
 
     public void AddOneToCount()

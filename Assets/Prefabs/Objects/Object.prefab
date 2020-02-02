@@ -93,8 +93,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 0}
+  _type: 6
+  _workbench: {fileID: 0}
   _collider: {fileID: 0}
-  _type: 0
   _botType: 0
   _offsetHand: {fileID: 8568973235459455737}
 --- !u!114 &-6814801820556947102
