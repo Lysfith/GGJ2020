@@ -10,6 +10,7 @@ using Assets.Scripts.Game.Components.Bots;
 
 namespace Assets.Scripts.Game.Components.Objects
 {
+    [Serializable]
     public class C_Object : MonoBehaviour
     {
         [SerializeField] private Rigidbody _body;

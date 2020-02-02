@@ -24,7 +24,8 @@ namespace Assets.Scripts.Game.Components.Bots
         [SerializeField] private List<GameObject> _leftArms;
         [SerializeField] private List<GameObject> _rightArms;
         [SerializeField] private List<GameObject> _legs;
-        [SerializeField] private Material _material;
+        [SerializeField] private Material _materialV1;
+        [SerializeField] private Material _materialV2;
 
         [Header("Positions")]
         [SerializeField] private Transform _headPosition;
@@ -68,24 +69,33 @@ namespace Assets.Scripts.Game.Components.Bots
         {
             _parts = parts;
 
-            var newMaterial = new Material(_material);
+            var newMaterialV1 = _materialV1; // new Material(_materialV1);
+            var newMaterialV2 = _materialV2; // new Material(_materialV2);
 
-            newMaterial.SetColor("Color_F5B15491", color);
-            newMaterial.SetFloat("FresnelOpacity_", 0);
+            newMaterialV1.SetColor("Color_F5B15491", color);
+            newMaterialV1.SetFloat("FresnelOpacity_", 0);
+
+            newMaterialV2.SetColor("Color_F5B15491", color);
+            newMaterialV2.SetFloat("FresnelOpacity_", 0);
 
             var renderers = GetComponentsInChildren<Renderer>(true);
            
             foreach (var renderer in renderers)
             {
-                var material = renderer.materials.Where(i => i.name == "Color2").FirstOrDefault();
+                var materialV1 = renderer.materials.Where(i => i.name == "Color2_V1").FirstOrDefault();
+                var materialV2 = renderer.materials.Where(i => i.name == "Color2_V2").FirstOrDefault();
 
-                if(material == null)
+                if (materialV1 != null)
                 {
-                    continue;
+                    var index = Array.IndexOf(renderer.materials, materialV1);
+                    renderer.materials[index] = newMaterialV1;
+                }
+                else if (materialV2 != null)
+                {
+                    var index = Array.IndexOf(renderer.materials, materialV2);
+                    renderer.materials[index] = newMaterialV2;
                 }
 
-                var index = Array.IndexOf(renderer.materials, material);
-                renderer.materials[index] = newMaterial;
             }
 
             var leg = GetGOFromTypeAndVersion(ObjectType.LEG, _parts[ObjectType.LEG]);
