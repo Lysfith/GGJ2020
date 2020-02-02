@@ -34,7 +34,7 @@
             "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty"
             },
-            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"9c4c055f-52b8-4c68-b6b4-bbd85b67873f\"\n    },\n    \"m_Name\": \"Color\",\n    \"m_DefaultReferenceName\": \"Color_750F4EA2\",\n    \"m_OverrideReferenceName\": \"\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": {\n        \"r\": 0.801886796951294,\n        \"g\": 0.801886796951294,\n        \"b\": 0.801886796951294,\n        \"a\": 0.0\n    },\n    \"m_ColorMode\": 0\n}"
+            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"9c4c055f-52b8-4c68-b6b4-bbd85b67873f\"\n    },\n    \"m_Name\": \"Color\",\n    \"m_DefaultReferenceName\": \"Color_750F4EA2\",\n    \"m_OverrideReferenceName\": \"_Temperature\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": {\n        \"r\": 0.801886796951294,\n        \"g\": 0.801886796951294,\n        \"b\": 0.801886796951294,\n        \"a\": 0.0\n    },\n    \"m_ColorMode\": 0\n}"
         },
         {
             "typeInfo": {

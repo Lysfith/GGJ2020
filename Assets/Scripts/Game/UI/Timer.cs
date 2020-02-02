@@ -10,8 +10,15 @@ public class Timer : MonoBehaviour
     public int _timetoadd = 30;
     private bool end = true;
 
+    public Color _startColor, _endColor;
+    public Renderer _landscapeRenderer;
+
+    private Color _currentColor;
+
+
     private void Start()
     {
+        _currentColor = _startColor;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().RegisterTimer(this);
         this.gameObject.GetComponent<TextMeshProUGUI>().text = System.Math.Truncate(_time).ToString();
     }
@@ -23,6 +30,12 @@ public class Timer : MonoBehaviour
         {
             _time -= Time.deltaTime;
             this.gameObject.GetComponent<TextMeshProUGUI>().text = System.Math.Truncate(_time).ToString();
+
+            Color targetColor = Color.Lerp(_startColor, _endColor, 1.0f - _time / _timeMax);
+
+            _currentColor = Color.Lerp(_currentColor, targetColor, Time.deltaTime);
+            _landscapeRenderer.material.SetColor("_Temperature", _currentColor);
+
             if (_time <= 0)
             {
                 end = true;

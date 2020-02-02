@@ -289,8 +289,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a85567f7d8ed14099a89db9912100d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 60
+  _timeMax: 600
+  _time: 650
   _timetoadd: 30
+  _startColor: {r: 0.5372549, g: 0.5568628, b: 0.30980393, a: 1}
+  _endColor: {r: 0.5568628, g: 0.32373387, b: 0.30980393, a: 1}
+  _landscapeRenderer: {fileID: 402686406}
 --- !u!1 &119046169
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +510,7 @@ GameObject:
   - component: {fileID: 402686406}
   - component: {fileID: 402686405}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Landscape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -694,7 +698,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 10.57
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 0470b5dc03978ee4b9ef24c6f314df71, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!4 &462993054
 Transform:
   m_ObjectHideFlags: 0
@@ -1040,7 +1044,7 @@ Transform:
   m_GameObject: {fileID: 948306688}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -10, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 16, y: 1, z: 16}
   m_Children: []
   m_Father: {fileID: 2033331113}
   m_RootOrder: 2
@@ -1128,8 +1132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterPrefab: {fileID: 4701897854842842848, guid: 94886a622c162da43a28a5a650bcc954,
     type: 3}
-  _botPrefab: {fileID: 8677913805968061942, guid: b56520b0c3da7794bba3cc78c3d1ad48,
-    type: 3}
   _parachutePrefab: {fileID: 8134260727429184645, guid: 501cd3ff0e1fc2144b103f3480e1e722,
     type: 3}
   _boxOpenedPrefab: {fileID: 7283873429622496782, guid: bf86cfa4808e5224aad60bec420e3df5,
@@ -1137,6 +1139,7 @@ MonoBehaviour:
   _wastePrefab: {fileID: 5076340347368216758, guid: 22db7ecc8d2a2e44b9f70af2dcbde03e,
     type: 3}
   _botDefinitionList: {fileID: 11400000, guid: a3fc7236aef9c13479e7346fb206c65f, type: 2}
+  _boxList: {fileID: 0}
   _spawnPositions:
   - {fileID: 2101948390}
   - {fileID: 2030548619}
@@ -1146,9 +1149,13 @@ MonoBehaviour:
   _botRoot: {fileID: 119046170}
   _boxRoot: {fileID: 440826582}
   _objectRoot: {fileID: 553174662}
+  _characters: []
+  _playerSlots: []
   _timeBetweenBotAndParachute: 5
   _currentBotDefinition: {fileID: 0}
   _boxes: []
+  _isEnabled: 0
+  _isRecyclingStep: 0
 --- !u!1 &1101943922
 GameObject:
   m_ObjectHideFlags: 0
