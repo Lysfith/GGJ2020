@@ -33,6 +33,7 @@ namespace Assets.Scripts.Game.Components.Systems
 
         [Header("References")]
         [SerializeField] private List<Transform> _spawnPositions;
+        [SerializeField] private List<Transform> _endPositions;
         [SerializeField] private Transform _charactersRoot;
         [SerializeField] private Transform _botRoot;
         [SerializeField] private Transform _boxRoot;
@@ -57,23 +58,24 @@ namespace Assets.Scripts.Game.Components.Systems
 
             if (!_playerSlots.Where(s => s._active).Any())
             {
-                foreach (var gamepad in Gamepad.all)
+                for (int i = 0; i < Gamepad.all.Count; i++)
                 {
+                    var gamepad = Gamepad.all[i];
                     var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
                     SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
                 }
             }
             else
             {
-                foreach (var slot in _playerSlots)
+                for (int i = 0; i < _playerSlots.Count(); i++)
                 {
+                    var slot = _playerSlots[i];
                     if (!slot._active)
                     {
                         continue;
                     }
 
-                    var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-                    SpawnCharacter(slot._gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                    SpawnCharacter(slot._gamepad, _characterPrefab, _spawnPositions.ElementAt(i).position);
                 }
             }
         }
@@ -100,10 +102,12 @@ namespace Assets.Scripts.Game.Components.Systems
         {
             _isEnabled = false;
 
-            foreach (var character in _characters)
+            for (int i = 0; i < _characters.Count; i++)
             {
+                var character = _characters[i];
                 character.Control.Disable();
                 character.Mover.Disable();
+                character.Mover.MoveTo(_endPositions[i].position);
             }
         }
 
@@ -152,7 +156,7 @@ namespace Assets.Scripts.Game.Components.Systems
             bot.OnBotComplete += (s, e) =>
             {
                 var layerWaste = LayerMask.NameToLayer("Waste");
-                foreach(var box in _boxList.Objects)
+                foreach (var box in _boxList.Objects)
                 {
                     box.gameObject.layer = layerWaste;
                 }
@@ -183,6 +187,13 @@ namespace Assets.Scripts.Game.Components.Systems
             RemoveObjectFromList(boxClosed.GetComponent<C_Object>());
             AddObjectToList(box.GetComponent<C_Object>());
             AddObjectToList(part.GetComponent<C_Object>());
+
+            if(_isRecyclingStep)
+            {
+                var layerWaste = LayerMask.NameToLayer("Waste");
+                box.layer = layerWaste;
+                part.layer = layerWaste;
+            }
 
             Destroy(boxClosed);
         }

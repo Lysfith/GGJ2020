@@ -62,6 +62,11 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             transform.forward = directionFacing;
             //transform.forward = direction;
         }
+
+        public void MoveTo(Vector3 destination)
+        {
+            _agent.destination = destination;
+        }
     }
 
 }
