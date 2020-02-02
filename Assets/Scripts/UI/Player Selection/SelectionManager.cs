@@ -89,7 +89,11 @@ public class SelectionManager : MonoBehaviour
                 }
             }
             else if (gamepad.startButton.wasPressedThisFrame && _firstEmpty < _playerUISlots.Length) {
-                PlayerJoin(gamepad);
+                if(!_gamepadSlots.ContainsKey(gamepad))
+                {
+                    PlayerJoin(gamepad);
+                }
+
             }
             else if (gamepad.leftShoulder.wasPressedThisFrame || gamepad.leftTrigger.wasPressedThisFrame || gamepad.dpad.left.wasPressedThisFrame || gamepad.leftStick.left.wasPressedThisFrame)
             {
@@ -141,6 +145,8 @@ public class SelectionManager : MonoBehaviour
 
         if (_playerSlots[slot]._ready) return;
 
+        SoundManager.PlaySound(SoundList.Sound.select);
+
         var anchor = _playerTransforms[slot].Find("Anchor");
 
         GameObject.Destroy(_playerTransforms[slot].Find("Model").gameObject);
@@ -161,6 +167,8 @@ public class SelectionManager : MonoBehaviour
 
     private void PlayerJoin(Gamepad gamepad)
     {
+
+        SoundManager.PlaySound(SoundList.Sound.login);
         _gamepadSlots.Add(gamepad, _firstEmpty);
         _playerSlots[_firstEmpty]._active = true;
         _playerSlots[_firstEmpty]._gamepad = gamepad;
@@ -192,6 +200,7 @@ public class SelectionManager : MonoBehaviour
             _playerUISlots[slot].Find("Ready").gameObject.SetActive(true);
             _playerUISlots[slot].Find("Ready").GetComponent<BounceEffect>()._callBack.AddListener(OnReady);
             _playerUISlots[slot].Find("Ready").GetComponent<BounceEffect>().Play();
+            SoundManager.PlaySound(SoundList.Sound.ready);
             _playerUISlots[slot].Find("Info").Find("Left").gameObject.SetActive(false);
             _playerUISlots[slot].Find("Info").Find("Right").gameObject.SetActive(false);
         }

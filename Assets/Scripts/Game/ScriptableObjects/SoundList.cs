@@ -21,7 +21,12 @@ public class SoundList : ScriptableObject
         one,
         two,
         three,
-        play
+        play,
+        error,
+        login,
+        select,
+        ready,
+        start
     }
 
     public AudioClip footstep;
@@ -39,6 +44,11 @@ public class SoundList : ScriptableObject
     public AudioClip two;
     public AudioClip three;
     public AudioClip play;
+    public AudioClip error;
+    public AudioClip login;
+    public AudioClip select;
+    public AudioClip ready;
+    public AudioClip start;
 
 
 }
