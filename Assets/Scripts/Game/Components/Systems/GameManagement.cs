@@ -67,7 +67,7 @@ public class GameManagement : MonoBehaviour
                         Destroy(_tmp.gameObject);
                         _active = false;
                         _Timer.TimerReset();
-
+                        GameObject.FindGameObjectWithTag("Canvas").transform.parent.GetComponents<AudioSource>()[1].Play();
                         OnStart?.Invoke();
                         break;
                 }
