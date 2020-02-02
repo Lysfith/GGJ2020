@@ -1196,8 +1196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f3f96129662824482478a74494a7b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterPrefab: {fileID: 4701897854842842848, guid: 94886a622c162da43a28a5a650bcc954,
-    type: 3}
+  _playerModels: {fileID: 11400000, guid: 4bb382cea07376640a6e792c3a78a2c3, type: 2}
   _parachutePrefab: {fileID: 8134260727429184645, guid: 501cd3ff0e1fc2144b103f3480e1e722,
     type: 3}
   _boxOpenedPrefab: {fileID: 7283873429622496782, guid: bf86cfa4808e5224aad60bec420e3df5,

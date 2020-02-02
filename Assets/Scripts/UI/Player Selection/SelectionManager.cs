@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Assets.Scripts.Global.Components;
+using UnityEngine.AI;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -40,12 +41,29 @@ public class SelectionManager : MonoBehaviour
         _gamepadSlots = new Dictionary<Gamepad, int>();
         _readyToStart = false;
         _locked = false;
+        int index = 0;
         foreach (var playerSlot in _playerSlots)
         {
             playerSlot._active = false;
             playerSlot._ready = false;
             playerSlot._gamepad = null;
-            
+
+            int l = _playerModels.prefabs.Length;
+            int modelIndex = (index % l + l) % l;
+            var model = GameObject.Instantiate(_playerModels.prefabs[index], _playerTransforms[index]);
+            var anchor = _playerTransforms[index].Find("Anchor");
+            model.transform.position = anchor.position;
+            model.transform.rotation = anchor.rotation;
+            model.transform.localScale = anchor.localScale;
+            var rend = model.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
+            Assert.IsNotNull(rend);
+            if (rend)
+            {
+                rend.materials[1].SetColor("_BaseColor", playerSlot._color);
+            }
+            playerSlot._type = (PlayerType)index;
+            index++;
+
         }
     }
 
@@ -149,18 +167,19 @@ public class SelectionManager : MonoBehaviour
 
         var anchor = _playerTransforms[slot].Find("Anchor");
 
-        GameObject.Destroy(_playerTransforms[slot].Find("Model").gameObject);
+        GameObject.Destroy(_playerTransforms[slot].GetChild(1).gameObject);
         int l = _playerModels.prefabs.Length;
         int model = (modelIndex % l + l) % l;
         var go = GameObject.Instantiate(_playerModels.prefabs[model], _playerTransforms[slot]);
         go.name = "Model";
         go.transform.position = anchor.position;
         go.transform.rotation = anchor.rotation;
-        var rend = go.GetComponent<Renderer>();
+        go.transform.localScale = anchor.localScale;
+        var rend = go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
         Assert.IsNotNull(rend);
         if(rend)
         {
-            rend.material.SetColor("_BaseColor", _playerSlots[slot]._color);
+            rend.materials[1].SetColor("_BaseColor", _playerSlots[slot]._color);
         }
         _playerSlots[slot]._type = (PlayerType) model;
     }
