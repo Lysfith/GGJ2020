@@ -27,3 +27,8 @@ MonoBehaviour:
   two: {fileID: 8300000, guid: 7caf9db894f62424db8609e80d0e91af, type: 3}
   three: {fileID: 8300000, guid: 173f13a4ee2b26e449fc1bab8632369f, type: 3}
   play: {fileID: 8300000, guid: 7004fe16356585a4782b7daf7550e9e9, type: 3}
+  glou: {fileID: 8300000, guid: 638f403d5dab1a84d916267ec2d7e605, type: 3}
+  cucaracha: {fileID: 8300000, guid: 5e254def532a1c94384c8ae265a846f9, type: 3}
+  accel: {fileID: 8300000, guid: 163a7b6709162a248a72335cbccdf0af, type: 3}
+  decel: {fileID: 8300000, guid: b46aa906c0b62664baee17ca2e9bb756, type: 3}
+  elec: {fileID: 8300000, guid: cf3c540f9de561c4084aa56b93f369bd, type: 3}

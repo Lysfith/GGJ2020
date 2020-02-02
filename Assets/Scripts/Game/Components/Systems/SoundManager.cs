@@ -79,6 +79,11 @@ public static class SoundManager
             case Sound.one: return sl.one;
             case Sound.two: return sl.two;
             case Sound.three: return sl.three;
+            case Sound.glou: return sl.glou;
+            case Sound.cucaracha: return sl.cucaracha;
+            case Sound.accel: return sl.accel;
+            case Sound.decel: return sl.decel;
+            case Sound.elec: return sl.elec;
 
             default: Debug.LogError("Attention. Son non implemente");
                 return null;

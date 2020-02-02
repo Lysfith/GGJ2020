@@ -6,13 +6,12 @@ using UnityEngine.Assertions;
 public class PopupPopper : MonoBehaviour
 {
     private GameObject _tip = null;
-    public void ShowToolTip(Vector3 coordinates)
+    public void ShowToolTip(GameObject origin, int popupnum)
     {
+        GameObject popup = Resources.Load<GameObject>("tips/tip" + popupnum.ToString());
         if (_tip != null)
             Destroy(_tip);
-        _tip = Instantiate(Resources.Load<GameObject>("tip"), GameObject.FindGameObjectWithTag("Canvas").transform);
-        _tip.transform.position = new Vector3(coordinates.x, _tip.transform.position.y, coordinates.z);
-
+        _tip = Instantiate(popup, origin.transform);
 
         Assert.IsNotNull(_tip);
 

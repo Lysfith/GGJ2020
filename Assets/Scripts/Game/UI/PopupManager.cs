@@ -9,7 +9,7 @@ using UnityEngine.Assertions;
 public class PopupManager : MonoBehaviour
 {
     private static GameObject _canvas;
-    private static bool _Isactive = false;
+    public static bool _Isactive = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,17 +34,24 @@ public class PopupManager : MonoBehaviour
         if (!_Isactive)
             return;
 
-        Vector3 coordinates = new Vector3(0,0,0);
         GameObject[] workbenches = GameObject.FindGameObjectsWithTag("Workbench");
         foreach (GameObject wb in workbenches)
         {
             if(wb.GetComponent<C_Workbench>().GetWorkbenchType() == objecttype)
             {
-                coordinates = wb.transform.position;
+                Assert.IsNotNull(player.GetComponent<PopupPopper>());
+                player.GetComponent<PopupPopper>().ShowToolTip(wb,1);
             }
         }
-        Assert.IsNotNull(player.GetComponent<PopupPopper>());
-        player.GetComponent<PopupPopper>().ShowToolTip(coordinates);
+        if(objecttype == ObjectType.PACK)
+            player.GetComponent<PopupPopper>().ShowToolTip(player,3);
+        if (objecttype == ObjectType.WASTE)
+            player.GetComponent<PopupPopper>().ShowToolTip(player, 2);
+        if (objecttype == ObjectType.COMPLETED)
+            player.GetComponent<PopupPopper>().ShowToolTip(GameObject.FindGameObjectWithTag("Bot"), 1);
+
+
+
     }
     public static void RemoveTipOnPlayer(GameObject player )
     {

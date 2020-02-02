@@ -39,10 +39,14 @@ namespace Assets.Scripts.Game.Components.Objects
             if(_workbench)
             {
                 _workbench.CurrentObject = null;
+                PopupManager.ShowTipOnPlayer(player, ObjectType.COMPLETED);
+            }
+            else
+            {
+                PopupManager.ShowTipOnPlayer(player, this._type);
             }
             _collider.enabled = false;
             _body.isKinematic = true;
-            PopupManager.ShowTipOnPlayer(player, this._type);
         }
 
         public void Release(GameObject player)

@@ -73,6 +73,8 @@ public class GameManagement : MonoBehaviour
                 }
             }
         }
+        if (PopupManager._Isactive && _Timer._time < (_Timer._timeMax/4)*3)
+            PopupManager.Deactivate();
     }
 
     public void EndGame()

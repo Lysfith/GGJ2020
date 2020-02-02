@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6208058101587345534}
   m_Layer: 13
   m_Name: Bot
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 0}
   _body: {fileID: 0}
-  _animator: {fileID: 0}
   _headPosition: {fileID: 0}
   _leftArmPosition: {fileID: 0}
   _rightArmPosition: {fileID: 0}

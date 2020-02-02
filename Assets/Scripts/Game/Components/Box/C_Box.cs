@@ -31,6 +31,7 @@ namespace Assets.Scripts.Game.Components.Box
         public void Open(GameObject player)
         {
             SoundManager.PlaySound(SoundList.Sound.boxopen, player);
+            PopupManager.RemoveTipOnPlayer(player);
             var levelSystem = FindObjectOfType<C_LevelSystem>();
             levelSystem.SpawnBoxObject(gameObject);
         }
