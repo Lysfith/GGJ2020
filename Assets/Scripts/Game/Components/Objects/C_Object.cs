@@ -16,11 +16,11 @@ namespace Assets.Scripts.Game.Components.Objects
         [SerializeField] private ObjectType _type;
         [SerializeField] private C_Workbench _workbench;
         [SerializeField] private Collider _collider;
-        [SerializeField] private BotType _botType;
+        [SerializeField] private PartVersion _partVersion;
         [SerializeField] private Transform _offsetHand;
 
         public ObjectType ObjectType => _type;
-        public BotType BotType => _botType;
+        public PartVersion Version => _partVersion;
         public Transform OffsetHand => _offsetHand;
 
         private void OnEnable()

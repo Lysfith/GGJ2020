@@ -348,6 +348,26 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.323
       objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 1bb9b8edebd7f184d8dad64d169075e5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 1bb9b8edebd7f184d8dad64d169075e5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: NaN
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 1bb9b8edebd7f184d8dad64d169075e5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 1bb9b8edebd7f184d8dad64d169075e5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5069624857888503567, guid: 1bb9b8edebd7f184d8dad64d169075e5,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -901,7 +921,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6e-45, y: -11.772438, z: 8.16e-43, w: 1.95e-43}
+  m_BoundingSphereOverride: {x: 6.428579e-39, y: 6.153074e-39, z: 6.336655e-39, w: 6.428489e-39}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1204,8 +1224,17 @@ MonoBehaviour:
     type: 3}
   _wastePrefab: {fileID: 5076340347368216758, guid: 22db7ecc8d2a2e44b9f70af2dcbde03e,
     type: 3}
-  _botDefinitionList: {fileID: 11400000, guid: a3fc7236aef9c13479e7346fb206c65f, type: 2}
+  _botBasePrefab: {fileID: 8677913805968061942, guid: b56520b0c3da7794bba3cc78c3d1ad48,
+    type: 3}
   _boxList: {fileID: 11400000, guid: 11d7df9b3c05dc3409137ef3bbf6cc73, type: 2}
+  _headList: {fileID: 11400000, guid: 2e52e7d396b935c4ba97bdd220ebe351, type: 2}
+  _chestList: {fileID: 11400000, guid: f569c9a3b23306f4ea15a288ff019ab8, type: 2}
+  _leftArmList: {fileID: 11400000, guid: b27c335ed17e734409df0f5ee5c3fa49, type: 2}
+  _rightArmList: {fileID: 11400000, guid: 39b7d186ca23a404ba386809032e052a, type: 2}
+  _legList: {fileID: 11400000, guid: 64a7dde7896d6e943ac614720b4dff1f, type: 2}
+  _colorList: {fileID: 11400000, guid: 5ee1aedfbec1aab44b8f2b3583a81b36, type: 2}
+  _currentColor: {r: 0, g: 0, b: 0, a: 0}
+  _partsInvalidPrefab: []
   _spawnPositions:
   - {fileID: 2101948390}
   - {fileID: 2030548619}
@@ -1227,10 +1256,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a92c8457cf30c8488b221a16ae227ee, type: 2}
   - {fileID: 11400000, guid: ea37a8999cbdac147af0cc7533fd122c, type: 2}
   _timeBetweenBotAndParachute: 5
-  _currentBotDefinition: {fileID: 0}
   _boxes: []
   _isEnabled: 0
   _isRecyclingStep: 0
+  _botMaterial: {fileID: 2100000, guid: f81dbe0e49dd54846bf7a1be74b6c8ae, type: 2}
+  _bot: {fileID: 0}
 --- !u!1 &1101943922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,6 +2296,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1101943923}
     m_Modifications:
+    - target: {fileID: 3129830825269444908, guid: 4ecaa25cc8958084aaa1b1ee9db0dca5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 4ecaa25cc8958084aaa1b1ee9db0dca5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: -2.9711628
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 4ecaa25cc8958084aaa1b1ee9db0dca5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 4ecaa25cc8958084aaa1b1ee9db0dca5,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 8.16e-43
+      objectReference: {fileID: 0}
     - target: {fileID: 5069624857888503567, guid: 4ecaa25cc8958084aaa1b1ee9db0dca5,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -2500,6 +2550,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1101943923}
     m_Modifications:
+    - target: {fileID: 3129830825269444908, guid: f92b6c47ef9938446972381f25d21101,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: f92b6c47ef9938446972381f25d21101,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: f92b6c47ef9938446972381f25d21101,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 1.20282e-40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: f92b6c47ef9938446972381f25d21101,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5069624857888503567, guid: f92b6c47ef9938446972381f25d21101,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -3355,6 +3425,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.428
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 022f80ec1571af14eac462586540aadc,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 022f80ec1571af14eac462586540aadc,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
+      value: 1.22445e-40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 022f80ec1571af14eac462586540aadc,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 8.16e-43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129830825269444908, guid: 022f80ec1571af14eac462586540aadc,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 8.16e-43
       objectReference: {fileID: 0}
     - target: {fileID: 5069624857888503567, guid: 022f80ec1571af14eac462586540aadc,
         type: 3}
