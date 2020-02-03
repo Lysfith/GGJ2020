@@ -155,6 +155,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if (_triggerWorkbench.CurrentWorkbench != null && _triggerWorkbench.CurrentWorkbench.WorkbenchType != _object.ObjectType)
             {
+                SoundManager.PlaySound(SoundList.Sound.error, gameObject);
                 return;
             }
 

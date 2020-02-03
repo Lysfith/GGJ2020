@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Assets.Scripts.Global.Components;
+using UnityEngine.AI;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -40,12 +41,29 @@ public class SelectionManager : MonoBehaviour
         _gamepadSlots = new Dictionary<Gamepad, int>();
         _readyToStart = false;
         _locked = false;
+        int index = 0;
         foreach (var playerSlot in _playerSlots)
         {
             playerSlot._active = false;
             playerSlot._ready = false;
             playerSlot._gamepad = null;
-            
+
+            int l = _playerModels.prefabs.Length;
+            int modelIndex = (index % l + l) % l;
+            var model = GameObject.Instantiate(_playerModels.prefabs[index], _playerTransforms[index]);
+            var anchor = _playerTransforms[index].Find("Anchor");
+            model.transform.position = anchor.position;
+            model.transform.rotation = anchor.rotation;
+            model.transform.localScale = anchor.localScale;
+            var rend = model.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
+            Assert.IsNotNull(rend);
+            if (rend)
+            {
+                rend.materials[1].SetColor("_BaseColor", playerSlot._color);
+            }
+            playerSlot._type = (PlayerType)index;
+            index++;
+
         }
     }
 
@@ -72,6 +90,7 @@ public class SelectionManager : MonoBehaviour
                 if(_readyToStart)
                 {
                     _locked = true;
+                    Destroy(GameObject.FindGameObjectWithTag("Music"));
                     OnStart?.Invoke();
                     return;
                 }
@@ -89,7 +108,11 @@ public class SelectionManager : MonoBehaviour
                 }
             }
             else if (gamepad.startButton.wasPressedThisFrame && _firstEmpty < _playerUISlots.Length) {
-                PlayerJoin(gamepad);
+                if(!_gamepadSlots.ContainsKey(gamepad))
+                {
+                    PlayerJoin(gamepad);
+                }
+
             }
             else if (gamepad.leftShoulder.wasPressedThisFrame || gamepad.leftTrigger.wasPressedThisFrame || gamepad.dpad.left.wasPressedThisFrame || gamepad.leftStick.left.wasPressedThisFrame)
             {
@@ -141,26 +164,31 @@ public class SelectionManager : MonoBehaviour
 
         if (_playerSlots[slot]._ready) return;
 
+        SoundManager.PlaySound(SoundList.Sound.select);
+
         var anchor = _playerTransforms[slot].Find("Anchor");
 
-        GameObject.Destroy(_playerTransforms[slot].Find("Model").gameObject);
+        GameObject.Destroy(_playerTransforms[slot].GetChild(1).gameObject);
         int l = _playerModels.prefabs.Length;
         int model = (modelIndex % l + l) % l;
         var go = GameObject.Instantiate(_playerModels.prefabs[model], _playerTransforms[slot]);
         go.name = "Model";
         go.transform.position = anchor.position;
         go.transform.rotation = anchor.rotation;
-        var rend = go.GetComponent<Renderer>();
+        go.transform.localScale = anchor.localScale;
+        var rend = go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
         Assert.IsNotNull(rend);
         if(rend)
         {
-            rend.material.SetColor("_BaseColor", _playerSlots[slot]._color);
+            rend.materials[1].SetColor("_BaseColor", _playerSlots[slot]._color);
         }
         _playerSlots[slot]._type = (PlayerType) model;
     }
 
     private void PlayerJoin(Gamepad gamepad)
     {
+
+        SoundManager.PlaySound(SoundList.Sound.login);
         _gamepadSlots.Add(gamepad, _firstEmpty);
         _playerSlots[_firstEmpty]._active = true;
         _playerSlots[_firstEmpty]._gamepad = gamepad;
@@ -192,6 +220,7 @@ public class SelectionManager : MonoBehaviour
             _playerUISlots[slot].Find("Ready").gameObject.SetActive(true);
             _playerUISlots[slot].Find("Ready").GetComponent<BounceEffect>()._callBack.AddListener(OnReady);
             _playerUISlots[slot].Find("Ready").GetComponent<BounceEffect>().Play();
+            SoundManager.PlaySound(SoundList.Sound.ready);
             _playerUISlots[slot].Find("Info").Find("Left").gameObject.SetActive(false);
             _playerUISlots[slot].Find("Info").Find("Right").gameObject.SetActive(false);
         }

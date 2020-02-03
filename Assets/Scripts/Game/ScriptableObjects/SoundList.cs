@@ -22,6 +22,11 @@ public class SoundList : ScriptableObject
         two,
         three,
         play,
+        error,
+        login,
+        select,
+        ready,
+        start,
         glou,
         cucaracha,
         accel,
@@ -44,6 +49,11 @@ public class SoundList : ScriptableObject
     public AudioClip two;
     public AudioClip three;
     public AudioClip play;
+    public AudioClip error;
+    public AudioClip login;
+    public AudioClip select;
+    public AudioClip ready;
+    public AudioClip start;
     public AudioClip glou;
     public AudioClip cucaracha;
     public AudioClip accel;

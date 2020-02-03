@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
@@ -25,7 +26,7 @@ namespace Assets.Scripts.Game.Components.Systems
 
 
         [Header("Prefabs")]
-        [SerializeField] private GameObject _characterPrefab;
+        [SerializeField] private PlayerModels _playerModels;
         [SerializeField] private GameObject _parachutePrefab;
         [SerializeField] private GameObject _boxOpenedPrefab;
         [SerializeField] private GameObject _wastePrefab;
@@ -74,7 +75,7 @@ namespace Assets.Scripts.Game.Components.Systems
                 {
                     var gamepad = Gamepad.all[i];
                     var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-                    SpawnCharacter(gamepad, _characterPrefab, _spawnPositions.ElementAt(randSpawn).position);
+                    SpawnCharacter(gamepad, i, _spawnPositions.ElementAt(randSpawn).position);
                 }
             }
             else
@@ -87,7 +88,7 @@ namespace Assets.Scripts.Game.Components.Systems
                         continue;
                     }
 
-                    SpawnCharacter(slot._gamepad, _characterPrefab, _spawnPositions.ElementAt(i).position);
+                    SpawnCharacter(slot._gamepad, i, _spawnPositions.ElementAt(i).position);
                 }
             }
         }
@@ -124,9 +125,12 @@ namespace Assets.Scripts.Game.Components.Systems
         }
 
 
-        private void SpawnCharacter(Gamepad gamepad, GameObject prefab, Vector3 position)
+        private void SpawnCharacter(Gamepad gamepad, int slot, Vector3 position)
         {
-            var go = Instantiate(prefab, _charactersRoot);
+
+            var go = Instantiate(_playerModels.prefabs[slot], _charactersRoot);
+            go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>().material.SetColor("_BaseColor", _playerSlots[slot]._color);
+            go.transform.GetComponent<NavMeshAgent>().enabled = true;
             go.transform.position = position;
 
             var character = go.GetComponent<C_Character>();
