@@ -90,6 +90,7 @@ public class SelectionManager : MonoBehaviour
                 if(_readyToStart)
                 {
                     _locked = true;
+                    Destroy(GameObject.FindGameObjectWithTag("Music"));
                     OnStart?.Invoke();
                     return;
                 }
