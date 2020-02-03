@@ -49,6 +49,16 @@ namespace Assets.Scripts.Game.Components.Repairing
             Assert.IsNotNull(_renderer);
         }
 
+        private void Update()
+        {
+            if(_currentObject == null)
+            {
+                return;
+            }
+
+            _currentObject.transform.localPosition = _currentObject.GetHandPosition();
+        }
+
         public bool CanTakeObject()
         {
             if(_currentObject == null)
@@ -169,9 +179,9 @@ namespace Assets.Scripts.Game.Components.Repairing
                 _currentRobotPart = robotPart;
             }
 
-            obj.transform.SetParent(transform);
-            obj.transform.localPosition = _objectPosition.localPosition;
-            obj.transform.localRotation = _objectPosition.localRotation;
+            obj.transform.SetParent(_objectPosition);
+            obj.transform.localPosition = - obj.OffsetHand.localPosition;
+            obj.transform.localRotation = Quaternion.identity;
             obj.EnterWorkbench();
 
         }

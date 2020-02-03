@@ -28,7 +28,6 @@ namespace Assets.Scripts.Game.Components.Objects
         {
             _body = GetComponent<Rigidbody>();
             _collider = GetComponent<Collider>();
-            _offsetHand = GetComponent<Transform>();
 
             Assert.IsNotNull(_body);
             Assert.IsNotNull(_collider);
@@ -71,6 +70,15 @@ namespace Assets.Scripts.Game.Components.Objects
         {
             _collider.enabled = false;
             _body.isKinematic = true;
+        }
+
+        public Vector3 GetHandPosition()
+        {
+            return -new Vector3(
+                OffsetHand.localPosition.x * transform.localScale.x,
+                OffsetHand.localPosition.y * transform.localScale.y,
+                OffsetHand.localPosition.z * transform.localScale.z
+           );
         }
     }
 }
