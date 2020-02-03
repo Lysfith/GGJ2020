@@ -74,9 +74,12 @@ namespace Assets.Scripts.Game.Components.Repairing
             _currentRobotArm = null;
             _currentRobotPart = null;
 
+            var obj = _currentObject;
+            _currentObject = null;
+
             ChangeLEDColor(new Color(.04f, .04f, .04f));
 
-            return _currentObject;
+            return obj;
         }
 
         private void ChangeLEDColor(Color color)

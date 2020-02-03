@@ -194,9 +194,17 @@ namespace Assets.Scripts.Game.Components.Bots
             }); 
         }
 
-        public void EnableAnimation()
+        public IEnumerator EnableAnimation()
         {
             //_animator.SetTrigger("Walking");
+
+            yield return new WaitForSeconds(1);
+
+            C_CameraShakeSystem.Instance.Shake();
+            EnableAnimation();
+
+            SoundManager.PlaySound(SoundList.Sound.droprobot, priority: true);
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
 
             var sequence = DOTween.Sequence();
             sequence.Insert(0, transform.DOMove(-transform.forward * 7, 1));
@@ -229,11 +237,8 @@ namespace Assets.Scripts.Game.Components.Bots
 
         private void BotComplete()
         {
-            C_CameraShakeSystem.Instance.Shake();
-            EnableAnimation();
-
-            SoundManager.PlaySound(SoundList.Sound.droprobot,priority:true);
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
+          
+            StartCoroutine(EnableAnimation());
         }
 
         private IEnumerator DestroyAfterTime()

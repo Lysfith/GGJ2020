@@ -240,8 +240,8 @@ namespace Assets.Scripts.Game.Components.Systems
                 return;
             }
 
-            var box = Instantiate(_boxOpenedPrefab, _objectRoot);
-            box.transform.position = boxClosed.transform.position;
+            //var box = Instantiate(_boxOpenedPrefab, _objectRoot);
+            //box.transform.position = boxClosed.transform.position;
 
             var randPart = UnityEngine.Random.Range(0, _boxes.Count);
             var prefabPart = _boxes.ElementAt(randPart);
@@ -249,6 +249,12 @@ namespace Assets.Scripts.Game.Components.Systems
             part.transform.position = boxClosed.transform.position + Vector3.up;
 
             var partObject = part.GetComponent<C_Object>();
+
+            if(!_bot.Parts.ContainsKey(partObject.ObjectType))
+            {
+                Debug.Log(partObject.ObjectType);
+            }
+
             var isValid = _bot.Parts[partObject.ObjectType] == partObject.Version;
 
             var renderer = part.GetComponentInChildren<Renderer>(true);
@@ -288,13 +294,13 @@ namespace Assets.Scripts.Game.Components.Systems
             _boxes.RemoveAt(randPart);
 
             RemoveObjectFromList(boxClosed.GetComponent<C_Object>());
-            AddObjectToList(box.GetComponent<C_Object>());
+            //AddObjectToList(box.GetComponent<C_Object>());
             AddObjectToList(partObject);
 
             if(_isRecyclingStep)
             {
                 var layerWaste = LayerMask.NameToLayer("Waste");
-                box.layer = layerWaste;
+                //box.layer = layerWaste;
                 part.layer = layerWaste;
             }
 
