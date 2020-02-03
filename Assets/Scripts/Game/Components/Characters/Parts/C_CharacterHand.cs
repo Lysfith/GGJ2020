@@ -111,10 +111,13 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         private void Take(C_Object obj)
         {
+            _character.Animator.SetTrigger("Grab");
+
             _object = obj;
             _object.Take(this.gameObject);
             _object.transform.SetParent(_hand);
-            _object.transform.localPosition = Vector3.zero;
+            _object.transform.localPosition = _object.GetHandPosition();
+            //_object.transform.localPosition = Vector3.zero;
             _object.transform.localRotation = Quaternion.identity;
             //_object.transform.localPosition = new Vector3(
             //    _object.OffsetHand.localPosition.x * _object.transform.localScale.x,
@@ -215,9 +218,5 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(_character.transform.position + Vector3.up, transform.forward * _raycastDistance);
-        }
     }
 }

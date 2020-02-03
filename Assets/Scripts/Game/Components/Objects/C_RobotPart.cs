@@ -34,6 +34,7 @@ namespace Assets.Scripts.Game.Components.Objects
                 if(_progress > _hardness)
                 {
                     _progress = _hardness;
+                    transform.localScale = Vector3.one;
                 } else
                 {
                     transform.localScale = _referenceScale * (1 +  .5f * _progress / _hardness);

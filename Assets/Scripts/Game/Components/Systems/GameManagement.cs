@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.Assertions;
+using Assets.Scripts.Global.Components;
 
 public class GameManagement : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class GameManagement : MonoBehaviour
     private int _startingtime = 4;
     private TextMeshProUGUI _tmp;
     private bool _active = false;
+    private S_SceneFaderSystem _sceneFader;
+    private GameObject _canvas;
+
 
     //Objets geres
     Timer _Timer;
@@ -19,16 +23,15 @@ public class GameManagement : MonoBehaviour
     public UnityEvent OnStart;
     public UnityEvent OnEnd;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
-
+        _sceneFader = FindObjectOfType<S_SceneFaderSystem>();
+        _canvas = GameObject.FindGameObjectWithTag("Canvas");
     }
 
     public void StartTimer()
     {
-        _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<TextMeshProUGUI>();
+        _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), _canvas.transform).GetComponent<TextMeshProUGUI>();
         _tmp.text = "Get Ready !";
         PopupManager.Activate();
 
@@ -67,7 +70,7 @@ public class GameManagement : MonoBehaviour
                         Destroy(_tmp.gameObject);
                         _active = false;
                         _Timer.TimerReset();
-                        GameObject.FindGameObjectWithTag("Canvas").transform.parent.GetComponents<AudioSource>()[1].Play();
+                        _canvas.transform.parent.GetComponents<AudioSource>()[1].Play();
                         OnStart?.Invoke();
                         break;
                 }
@@ -79,18 +82,20 @@ public class GameManagement : MonoBehaviour
 
     public void EndGame()
     {
-        _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<TextMeshProUGUI>();
-        _tmp.text = "Fini !!";
+        _tmp = Instantiate(Resources.Load<GameObject>("Text (TMP)"), _canvas.transform).GetComponent<TextMeshProUGUI>();
+        _tmp.text = "Game Over !";
 
         OnEnd?.Invoke();
-        if (Resources.Load<HighScore>("HighScore").score[19] <= _Counter._count)
+
+        var highScore = Resources.Load<HighScore>("HighScore");
+        if (highScore.score[highScore.score.Length-1] <= _Counter._count)
         {
-            Instantiate(Resources.Load<GameObject>("InputField (TMP)"), GameObject.FindGameObjectWithTag("Canvas").transform);
+            Instantiate(Resources.Load<GameObject>("InputField (TMP)"), _canvas.transform);
         }
-
-        StartCoroutine(WaitForClose());
-        UnityEngine.SceneManagement.SceneManager.LoadScene("PlayerSelectionMenu");
-
+        else
+        {
+            StartCoroutine(WaitForClose());
+        }
     }
 
     public void SendHighScore(TMP_InputField name)
@@ -99,7 +104,7 @@ public class GameManagement : MonoBehaviour
             name.text = "Mr. Default";
         HighScore hs = Resources.Load<HighScore>("HighScore");
         int i = 0;
-        while (hs.score[i] > _Counter._count && i<20)
+        while (hs.score[i] > _Counter._count && i< hs.score.Length)
              i++;
 
         for (int j = 19; j > i ; j--)
@@ -111,11 +116,14 @@ public class GameManagement : MonoBehaviour
         hs.joueur[i] = name.text;
         Destroy(name.gameObject);
 
+        _sceneFader.FadeOut("MainMenu");
     }
 
     IEnumerator WaitForClose()
     {
         yield return new WaitForSeconds(8);
+
+        _sceneFader.FadeOut("MainMenu");
     }
 
     public void AddOneToCount()

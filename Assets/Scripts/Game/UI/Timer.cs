@@ -20,6 +20,9 @@ public class Timer : MonoBehaviour
     {
         _currentColor = _startColor;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().RegisterTimer(this);
+
+        _time = _timeMax;
+
         this.gameObject.GetComponent<TextMeshProUGUI>().text = System.Math.Truncate(_time).ToString();
     }
 
@@ -49,7 +52,7 @@ public class Timer : MonoBehaviour
         _time += _timetoadd;
     }
 
-    public void TimerReset(float t = 60)
+    public void TimerReset()
     {
         _time = _timeMax;
         end = false;

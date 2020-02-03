@@ -34,13 +34,11 @@ namespace Assets.Scripts.Game.Components.Bots
         {
             _collider.enabled = false;
 
-            //var sequence = DOTween.Sequence();
-            //sequence.Insert(0, transform.DOMove(_destination.position, _duration));
-            //sequence.Insert(0, transform.DORotateQuaternion(_destination.rotation, _duration));
-            //sequence.Insert(0, transform.DOScale(_destination.localScale, _duration));
-            //sequence.OnComplete(EndAnimation);
-
-            EndAnimation();
+            var sequence = DOTween.Sequence();
+            sequence.Insert(0, transform.DOMove(_destination.position, _duration));
+            sequence.Insert(0, transform.DORotate(_destination.rotation.eulerAngles + new Vector3(0, 90, 0), _duration));
+            sequence.Insert(0, transform.DOScale(_destination.localScale, _duration));
+            sequence.OnComplete(EndAnimation);
         }
 
         private void EndAnimation()

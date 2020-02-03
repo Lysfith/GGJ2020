@@ -51,6 +51,7 @@ namespace Assets.Scripts.Game.Components.Systems
         [SerializeField] private Transform _objectRoot;
         [SerializeField] private List<C_Character> _characters;
         [SerializeField] private PlayerSlot[] _playerSlots;
+        [SerializeField] private GameObject _recyclingText;
 
         [Header("Properties")]
         [SerializeField] private float _timeBetweenBotAndParachute;
@@ -69,17 +70,17 @@ namespace Assets.Scripts.Game.Components.Systems
             _characters = new List<C_Character>();
             _boxList.Objects.Clear();
 
-            if (!_playerSlots.Where(s => s._active).Any())
-            {
-                for (int i = 0; i < Gamepad.all.Count; i++)
-                {
-                    var gamepad = Gamepad.all[i];
-                    var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-                    SpawnCharacter(gamepad, i, _spawnPositions.ElementAt(randSpawn).position);
-                }
-            }
-            else
-            {
+            //if (!_playerSlots.Where(s => s._active).Any())
+            //{
+            //    for (int i = 0; i < Gamepad.all.Count; i++)
+            //    {
+            //        var gamepad = Gamepad.all[i];
+            //        var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
+            //        SpawnCharacter(gamepad, i, _spawnPositions.ElementAt(randSpawn).position);
+            //    }
+            //}
+            //else
+            //{
                 for (int i = 0; i < _playerSlots.Count(); i++)
                 {
                     var slot = _playerSlots[i];
@@ -88,9 +89,9 @@ namespace Assets.Scripts.Game.Components.Systems
                         continue;
                     }
 
-                    SpawnCharacter(slot._gamepad, i, _spawnPositions.ElementAt(i).position);
+                    SpawnCharacter(slot._gamepad, slot, _spawnPositions.ElementAt(i).position);
                 }
-            }
+            //}
         }
 
         private void Update()
@@ -100,6 +101,7 @@ namespace Assets.Scripts.Game.Components.Systems
                 if (!_boxList.Objects.Any())
                 {
                     _isRecyclingStep = false;
+                    _recyclingText.SetActive(false);
                     SpawnBot();
                 }
             }
@@ -122,14 +124,28 @@ namespace Assets.Scripts.Game.Components.Systems
                 character.Mover.Disable();
                 character.Mover.MoveTo(_endPositions[i].position);
             }
+
+            StartCoroutine(ShowParachutes());
+        }
+
+        private IEnumerator ShowParachutes()
+        {
+            yield return new WaitForSeconds(3);
+
+            for (int i = 0; i < _characters.Count; i++)
+            {
+                var character = _characters[i];
+                character.ShowParachute();
+            }
         }
 
 
-        private void SpawnCharacter(Gamepad gamepad, int slot, Vector3 position)
+        private void SpawnCharacter(Gamepad gamepad, PlayerSlot slot, Vector3 position)
         {
 
-            var go = Instantiate(_playerModels.prefabs[slot], _charactersRoot);
-            go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>().material.SetColor("_BaseColor", _playerSlots[slot]._color);
+            var go = Instantiate(_playerModels.prefabs[(int)slot._type], _charactersRoot);
+            var renderer = go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
+            renderer.materials[1].SetColor("_BaseColor", slot._color);
             go.transform.GetComponent<NavMeshAgent>().enabled = true;
             go.transform.position = position;
 
@@ -208,11 +224,11 @@ namespace Assets.Scripts.Game.Components.Systems
             var bot = go.GetComponent<C_Bot>();
             var partsValid = new Dictionary<ObjectType, PartVersion>()
             {
-                { ObjectType.HEAD, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.CHEST, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.LEFT_ARM, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.RIGHT_ARM, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.LEG, (PartVersion)UnityEngine.Random.Range(0, 1) },
+                { ObjectType.HEAD, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.CHEST, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.LEFT_ARM, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.RIGHT_ARM, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.LEG, (PartVersion)UnityEngine.Random.Range(0, 2) },
             };
 
             _currentColor = GetColorRandom();
@@ -228,6 +244,7 @@ namespace Assets.Scripts.Game.Components.Systems
                 }
 
                 _isRecyclingStep = true;
+                _recyclingText.SetActive(true);
             };
 
             StartCoroutine(SpawnParachute());
@@ -240,8 +257,8 @@ namespace Assets.Scripts.Game.Components.Systems
                 return;
             }
 
-            var box = Instantiate(_boxOpenedPrefab, _objectRoot);
-            box.transform.position = boxClosed.transform.position;
+            //var box = Instantiate(_boxOpenedPrefab, _objectRoot);
+            //box.transform.position = boxClosed.transform.position;
 
             var randPart = UnityEngine.Random.Range(0, _boxes.Count);
             var prefabPart = _boxes.ElementAt(randPart);
@@ -249,6 +266,12 @@ namespace Assets.Scripts.Game.Components.Systems
             part.transform.position = boxClosed.transform.position + Vector3.up;
 
             var partObject = part.GetComponent<C_Object>();
+
+            if(!_bot.Parts.ContainsKey(partObject.ObjectType))
+            {
+                Debug.Log(partObject.ObjectType);
+            }
+
             var isValid = _bot.Parts[partObject.ObjectType] == partObject.Version;
 
             var renderer = part.GetComponentInChildren<Renderer>(true);
@@ -288,13 +311,13 @@ namespace Assets.Scripts.Game.Components.Systems
             _boxes.RemoveAt(randPart);
 
             RemoveObjectFromList(boxClosed.GetComponent<C_Object>());
-            AddObjectToList(box.GetComponent<C_Object>());
+            //AddObjectToList(box.GetComponent<C_Object>());
             AddObjectToList(partObject);
 
             if(_isRecyclingStep)
             {
                 var layerWaste = LayerMask.NameToLayer("Waste");
-                box.layer = layerWaste;
+                //box.layer = layerWaste;
                 part.layer = layerWaste;
             }
 

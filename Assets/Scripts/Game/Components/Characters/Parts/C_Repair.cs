@@ -32,6 +32,8 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         }
 
         private void Repair(object sender, object args) {
+            
+
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(transform.position, transform.forward, out hit, _raycastDistance, LayerMask.GetMask("Workbench")))
@@ -39,6 +41,8 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
                 var workbench = hit.collider.GetComponent<C_Workbench>();
                 if (workbench)
                 {
+                    _character.Animator.SetTrigger("StartRepair");
+
                     _character.Mover.Disable();
                     workbench.OnRepair(this.gameObject);
                     _currentWorkbench = workbench;
@@ -55,6 +59,8 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
         {
             _currentWorkbench = null;
             _character.Mover.Enable();
+
+            _character.Animator.SetTrigger("StopRepair");
         }
 
         private void Update()
