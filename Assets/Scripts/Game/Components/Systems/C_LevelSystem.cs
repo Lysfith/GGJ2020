@@ -70,17 +70,17 @@ namespace Assets.Scripts.Game.Components.Systems
             _characters = new List<C_Character>();
             _boxList.Objects.Clear();
 
-            if (!_playerSlots.Where(s => s._active).Any())
-            {
-                for (int i = 0; i < Gamepad.all.Count; i++)
-                {
-                    var gamepad = Gamepad.all[i];
-                    var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
-                    SpawnCharacter(gamepad, i, _spawnPositions.ElementAt(randSpawn).position);
-                }
-            }
-            else
-            {
+            //if (!_playerSlots.Where(s => s._active).Any())
+            //{
+            //    for (int i = 0; i < Gamepad.all.Count; i++)
+            //    {
+            //        var gamepad = Gamepad.all[i];
+            //        var randSpawn = UnityEngine.Random.Range(0, _spawnPositions.Count);
+            //        SpawnCharacter(gamepad, i, _spawnPositions.ElementAt(randSpawn).position);
+            //    }
+            //}
+            //else
+            //{
                 for (int i = 0; i < _playerSlots.Count(); i++)
                 {
                     var slot = _playerSlots[i];
@@ -89,9 +89,9 @@ namespace Assets.Scripts.Game.Components.Systems
                         continue;
                     }
 
-                    SpawnCharacter(slot._gamepad, i, _spawnPositions.ElementAt(i).position);
+                    SpawnCharacter(slot._gamepad, slot, _spawnPositions.ElementAt(i).position);
                 }
-            }
+            //}
         }
 
         private void Update()
@@ -140,12 +140,12 @@ namespace Assets.Scripts.Game.Components.Systems
         }
 
 
-        private void SpawnCharacter(Gamepad gamepad, int slot, Vector3 position)
+        private void SpawnCharacter(Gamepad gamepad, PlayerSlot slot, Vector3 position)
         {
 
-            var go = Instantiate(_playerModels.prefabs[slot], _charactersRoot);
+            var go = Instantiate(_playerModels.prefabs[(int)slot._type], _charactersRoot);
             var renderer = go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
-            renderer.materials[1].SetColor("_BaseColor", _playerSlots[slot]._color);
+            renderer.materials[1].SetColor("_BaseColor", slot._color);
             go.transform.GetComponent<NavMeshAgent>().enabled = true;
             go.transform.position = position;
 
