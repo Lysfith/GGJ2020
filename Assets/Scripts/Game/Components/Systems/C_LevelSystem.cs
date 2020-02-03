@@ -129,7 +129,8 @@ namespace Assets.Scripts.Game.Components.Systems
         {
 
             var go = Instantiate(_playerModels.prefabs[slot], _charactersRoot);
-            go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>().material.SetColor("_BaseColor", _playerSlots[slot]._color);
+            var renderer = go.transform.Find("Graphic").GetChild(0).Find("Body").GetComponent<Renderer>();
+            renderer.materials[1].SetColor("_BaseColor", _playerSlots[slot]._color);
             go.transform.GetComponent<NavMeshAgent>().enabled = true;
             go.transform.position = position;
 
