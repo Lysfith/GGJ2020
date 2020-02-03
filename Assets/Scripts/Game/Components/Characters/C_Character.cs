@@ -19,10 +19,12 @@ namespace Assets.Scripts.Game.Components.Characters
         [SerializeField] private C_CharacterControl _control;
         [SerializeField] private C_Repair _repair;
         [SerializeField] private C_CharacterHand _hand;
+        [SerializeField] private Animator _animator;
 
         public C_CharacterStats Stats => _stats;
         public C_CharacterMover Mover => _mover;
         public C_CharacterControl Control => _control;
+        public Animator Animator => _animator;
 
         private void OnEnable()
         {
@@ -31,11 +33,13 @@ namespace Assets.Scripts.Game.Components.Characters
             _control = GetComponent<C_CharacterControl>();
             _repair = GetComponent<C_Repair>();
             _hand = GetComponent<C_CharacterHand>();
+            _animator = GetComponentInChildren<Animator>();
 
             Assert.IsNotNull(_mover);
             Assert.IsNotNull(_control);
             Assert.IsNotNull(_repair);
             Assert.IsNotNull(_hand);
+            Assert.IsNotNull(_animator);
 
 
             _mover.Enable();

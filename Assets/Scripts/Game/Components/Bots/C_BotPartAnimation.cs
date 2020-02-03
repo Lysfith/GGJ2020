@@ -36,7 +36,7 @@ namespace Assets.Scripts.Game.Components.Bots
 
             var sequence = DOTween.Sequence();
             sequence.Insert(0, transform.DOMove(_destination.position, _duration));
-            //sequence.Insert(0, transform.DORotateQuaternion(_destination.rotation, _duration));
+            sequence.Insert(0, transform.DORotateQuaternion(_destination.rotation, _duration));
             sequence.Insert(0, transform.DOScale(_destination.localScale, _duration));
             sequence.OnComplete(EndAnimation);
         }

@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &2163622007532936902
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213385080944294663}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1549809906463992735, guid: 6c6d99802af1ab240bbc7099323ec22b, type: 3}
 --- !u!65 &5976565801681193162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9,10 +23,10 @@ BoxCollider:
   m_GameObject: {fileID: 4213385080944294663}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 1.4887793, y: 1.5266948, z: 1.1410226}
-  m_Center: {x: -0.27624243, y: 0.36311322, z: -0.003967695}
+  m_Size: {x: 1.302491, y: 1.1285548, z: 1.3162649}
+  m_Center: {x: -0.0179815, y: 2.1447537, z: 0.0064504147}
 --- !u!114 &7955711453196131043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,17 +106,17 @@ PrefabInstance:
     - target: {fileID: 888260690580717248, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 888260690580717248, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 888260690580717248, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 888260690580717249, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
@@ -208,17 +222,22 @@ PrefabInstance:
     - target: {fileID: 2178567562230521970, guid: 5066efa79217704428952997bd844c66,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2178567562230521970, guid: 5066efa79217704428952997bd844c66,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2178567562230521970, guid: 5066efa79217704428952997bd844c66,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312094904907113883, guid: 5066efa79217704428952997bd844c66,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5774874935571665037, guid: 5066efa79217704428952997bd844c66,
         type: 3}

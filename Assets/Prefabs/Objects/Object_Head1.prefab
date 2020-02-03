@@ -11,8 +11,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Radius: 0.4
+  m_Center: {x: -0.1, y: 2.95, z: 0}
 --- !u!114 &3776561420502188549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,17 +92,17 @@ PrefabInstance:
     - target: {fileID: 888260690580717248, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 888260690580717248, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 888260690580717248, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 888260690580717249, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
@@ -113,6 +113,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577769907332581899, guid: 931d75e3573e77d448c96526c26377c8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.087
       objectReference: {fileID: 0}
     - target: {fileID: 5905602864041016370, guid: 931d75e3573e77d448c96526c26377c8,
         type: 3}
@@ -203,17 +208,22 @@ PrefabInstance:
     - target: {fileID: 8409056415771380462, guid: 6aee7c8ef6a78c841a2c6eb66bcf40dd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8409056415771380462, guid: 6aee7c8ef6a78c841a2c6eb66bcf40dd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8409056415771380462, guid: 6aee7c8ef6a78c841a2c6eb66bcf40dd,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8850551922438256457, guid: 6aee7c8ef6a78c841a2c6eb66bcf40dd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aee7c8ef6a78c841a2c6eb66bcf40dd, type: 3}

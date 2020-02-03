@@ -41,6 +41,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             {
                 if (_ismoving == true)
                 {
+                    _character.Animator.SetBool("IsMoving", false);
                     _ismoving = false;
                     SoundManager.StopFoodStepSound(this.gameObject);
                 }
@@ -49,6 +50,7 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
             if (_ismoving == false)
             {
+                _character.Animator.SetBool("IsMoving", true);
                 _ismoving = true;
                 SoundManager.StartFoodStepSound(this.gameObject);
             }

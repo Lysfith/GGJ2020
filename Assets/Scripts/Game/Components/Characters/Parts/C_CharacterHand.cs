@@ -111,6 +111,8 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
 
         private void Take(C_Object obj)
         {
+            _character.Animator.SetTrigger("Grab");
+
             _object = obj;
             _object.Take(this.gameObject);
             _object.transform.SetParent(_hand);
@@ -215,9 +217,5 @@ namespace Assets.Scripts.Game.Components.Characters.Parts
             }
         }
 
-        private void OnDrawGizmos()
-        {
-            Debug.DrawRay(_character.transform.position + Vector3.up, transform.forward * _raycastDistance);
-        }
     }
 }
