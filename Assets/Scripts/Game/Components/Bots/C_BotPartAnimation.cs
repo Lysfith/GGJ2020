@@ -36,15 +36,13 @@ namespace Assets.Scripts.Game.Components.Bots
 
             var sequence = DOTween.Sequence();
             sequence.Insert(0, transform.DOMove(_destination.position, _duration));
-            sequence.Insert(0, transform.DORotateQuaternion(_destination.rotation, _duration));
+            sequence.Insert(0, transform.DORotate(_destination.rotation.eulerAngles + new Vector3(0, 90, 0), _duration));
             sequence.Insert(0, transform.DOScale(_destination.localScale, _duration));
             sequence.OnComplete(EndAnimation);
         }
 
         private void EndAnimation()
         {
-            Debug.Log(transform.position);
-            Debug.Log(_destination.position);
             _callbackAtEnd?.Invoke();
 
             C_LevelSystem.Instance.RemoveObjectFromList(gameObject.GetComponent<C_Object>());

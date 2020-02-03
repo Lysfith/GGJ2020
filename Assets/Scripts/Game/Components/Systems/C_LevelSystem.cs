@@ -51,6 +51,7 @@ namespace Assets.Scripts.Game.Components.Systems
         [SerializeField] private Transform _objectRoot;
         [SerializeField] private List<C_Character> _characters;
         [SerializeField] private PlayerSlot[] _playerSlots;
+        [SerializeField] private GameObject _recyclingText;
 
         [Header("Properties")]
         [SerializeField] private float _timeBetweenBotAndParachute;
@@ -100,6 +101,7 @@ namespace Assets.Scripts.Game.Components.Systems
                 if (!_boxList.Objects.Any())
                 {
                     _isRecyclingStep = false;
+                    _recyclingText.SetActive(false);
                     SpawnBot();
                 }
             }
@@ -121,6 +123,19 @@ namespace Assets.Scripts.Game.Components.Systems
                 character.Control.Disable();
                 character.Mover.Disable();
                 character.Mover.MoveTo(_endPositions[i].position);
+            }
+
+            StartCoroutine(ShowParachutes());
+        }
+
+        private IEnumerator ShowParachutes()
+        {
+            yield return new WaitForSeconds(3);
+
+            for (int i = 0; i < _characters.Count; i++)
+            {
+                var character = _characters[i];
+                character.ShowParachute();
             }
         }
 
@@ -209,11 +224,11 @@ namespace Assets.Scripts.Game.Components.Systems
             var bot = go.GetComponent<C_Bot>();
             var partsValid = new Dictionary<ObjectType, PartVersion>()
             {
-                { ObjectType.HEAD, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.CHEST, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.LEFT_ARM, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.RIGHT_ARM, (PartVersion)UnityEngine.Random.Range(0, 1) },
-                { ObjectType.LEG, (PartVersion)UnityEngine.Random.Range(0, 1) },
+                { ObjectType.HEAD, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.CHEST, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.LEFT_ARM, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.RIGHT_ARM, (PartVersion)UnityEngine.Random.Range(0, 2) },
+                { ObjectType.LEG, (PartVersion)UnityEngine.Random.Range(0, 2) },
             };
 
             _currentColor = GetColorRandom();
@@ -229,6 +244,7 @@ namespace Assets.Scripts.Game.Components.Systems
                 }
 
                 _isRecyclingStep = true;
+                _recyclingText.SetActive(true);
             };
 
             StartCoroutine(SpawnParachute());

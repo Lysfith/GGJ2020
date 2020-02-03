@@ -26,6 +26,7 @@ namespace Assets.Scripts.Game.Components.Bots
         [SerializeField] private List<GameObject> _legs;
         [SerializeField] private Material _materialV1;
         [SerializeField] private Material _materialV2;
+        [SerializeField] private GameObject _effects;
 
         [Header("Positions")]
         [SerializeField] private Transform _headPosition;
@@ -55,6 +56,7 @@ namespace Assets.Scripts.Game.Components.Bots
             Assert.IsNotNull(_collider);
             Assert.IsNotNull(_body);
             Assert.IsNotNull(_animator);
+            Assert.IsNotNull(_effects);
 
             _heads.ForEach((i) => { i.SetActive(false); });
             _chests.ForEach((i) => { i.SetActive(false); });
@@ -186,6 +188,7 @@ namespace Assets.Scripts.Game.Components.Bots
             SoundManager.PlaySound(SoundList.Sound.addpart);
             PopupManager.RemoveTipOnPlayer(this.gameObject);
             var botPartAnim = part.gameObject.AddComponent<C_BotPartAnimation>();
+            partDestination = transform;
             botPartAnim.Init(partDestination, () =>
             {
                 var go = GetGOFromTypeAndVersion(part.ObjectType, part.Version);
@@ -196,10 +199,13 @@ namespace Assets.Scripts.Game.Components.Bots
 
         public IEnumerator EnableAnimation()
         {
-            //_animator.SetTrigger("Walking");
+            _animator.enabled = true;
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
+            OnBotComplete?.Invoke(this, null);
+
+            _animator.SetTrigger("Walking");
             C_CameraShakeSystem.Instance.Shake();
             EnableAnimation();
 
@@ -207,14 +213,15 @@ namespace Assets.Scripts.Game.Components.Bots
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManagement>().AddOneToCount();
 
             var sequence = DOTween.Sequence();
-            sequence.Insert(0, transform.DOMove(-transform.forward * 7, 1));
-            sequence.InsertCallback(1, () =>
+            sequence.Insert(0, transform.DOMove(new Vector3(0.7f, -0.6f, -4.2f), 2));
+            sequence.Insert(2, transform.DOMove(new Vector3(0.7f, -1.3f, -6.9f), 2f));
+            sequence.InsertCallback(2, () =>
             {
-                //_animator.SetTrigger("Jumping");
+                _animator.SetTrigger("Jumping");
                 _collider.enabled = false;
                 _body.isKinematic = false;
                 _body.useGravity = true;
-                _body.AddForce(transform.forward * 20, ForceMode.Impulse);
+                _body.AddForce(new Vector3(0, 1, -1) * 1000, ForceMode.Impulse);
             });
             sequence.OnComplete(() =>
             {
@@ -245,7 +252,6 @@ namespace Assets.Scripts.Game.Components.Bots
         {
             yield return new WaitForSeconds(5);
 
-            OnBotComplete?.Invoke(this, null);
             Destroy(gameObject);
         }
 
@@ -255,6 +261,8 @@ namespace Assets.Scripts.Game.Components.Bots
             {
                 SoundManager.PlaySound(SoundList.Sound.robotclonc);
                 _body.isKinematic = true;
+
+                _effects.SetActive(false);
             }
         }
     }
