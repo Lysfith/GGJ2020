@@ -51,6 +51,11 @@ public class MainMenu : MonoBehaviour
             {
                 _sceneFader.FadeOut("PlayerSelectionMenu");
             }
+
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
     }
 
