@@ -87,15 +87,15 @@ public class GameManagement : MonoBehaviour
 
         OnEnd?.Invoke();
 
-        var highScore = Resources.Load<HighScore>("HighScore");
-        if (highScore.score[highScore.score.Length-1] <= _Counter._count)
-        {
-            Instantiate(Resources.Load<GameObject>("InputField (TMP)"), _canvas.transform);
-        }
-        else
-        {
+        //var highScore = Resources.Load<HighScore>("HighScore");
+        //if (highScore.score[highScore.score.Length-1] <= _Counter._count)
+        //{
+        //    Instantiate(Resources.Load<GameObject>("InputField (TMP)"), _canvas.transform);
+        //}
+        //else
+        //{
             StartCoroutine(WaitForClose());
-        }
+        //}
     }
 
     public void SendHighScore(TMP_InputField name)

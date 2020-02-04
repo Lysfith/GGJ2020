@@ -66,15 +66,15 @@ namespace Assets.Scripts.Game.Components.Repairing
                 return false;
             }
 
-            if (_currentRobotArm != null && _currentRobotArm.Progress < 1f)
-            {
-                return false;
-            }
+            //if (_currentRobotArm != null && _currentRobotArm.Progress < 1f)
+            //{
+            //    return false;
+            //}
 
-            if (_currentRobotPart != null && _currentRobotPart.Progress < _currentRobotPart.Hardness)
-            {
-                return false;
-            }
+            //if (_currentRobotPart != null && _currentRobotPart.Progress < _currentRobotPart.Hardness)
+            //{
+            //    return false;
+            //}
 
             return true;
         }
@@ -173,10 +173,20 @@ namespace Assets.Scripts.Game.Components.Repairing
             if (robotArm != null)
             {
                 _currentRobotArm = robotArm;
+
+                if (_currentRobotArm.Progress >= 1f)
+                {
+                    ChangeLEDColor(new Color(.04f, 1f, 0));
+                }
             }
             else if (robotPart != null)
             {
                 _currentRobotPart = robotPart;
+
+                if (_currentRobotPart.Progress >= _currentRobotPart.Hardness)
+                {
+                    ChangeLEDColor(new Color(.04f, 1f, 0));
+                }
             }
 
             obj.transform.SetParent(_objectPosition);
