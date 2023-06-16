@@ -19,45 +19,45 @@ public class PopupManager : MonoBehaviour
 
     public static void Activate() { 
         _Isactive = true;
-        //foreach (GameObject e in GameObject.FindGameObjectsWithTag("Player"))
-        //    e.AddComponent<PopupPopper>();
+        foreach (GameObject e in GameObject.FindGameObjectsWithTag("Player"))
+            e.AddComponent<PopupPopper>();
 
     }
     public static void Deactivate() { 
         _Isactive = false;
-        //foreach (PopupPopper e in FindObjectsOfType<PopupPopper>())
-        //    Destroy(e);
+        foreach (PopupPopper e in FindObjectsOfType<PopupPopper>())
+            Destroy(e);
     }
 
     public static void ShowTipOnPlayer(GameObject player, ObjectType objecttype)
     {
-        //if (!_Isactive)
-        //    return;
+        if (!_Isactive)
+            return;
 
-        //GameObject[] workbenches = GameObject.FindGameObjectsWithTag("Workbench");
-        //foreach (GameObject wb in workbenches)
-        //{
-        //    if(wb.GetComponent<C_Workbench>().GetWorkbenchType() == objecttype)
-        //    {
-        //        Assert.IsNotNull(player.GetComponent<PopupPopper>());
-        //        player.GetComponent<PopupPopper>().ShowToolTip(wb,1);
-        //    }
-        //}
-        //if(objecttype == ObjectType.PACK)
-        //    player.GetComponent<PopupPopper>().ShowToolTip(player,3);
-        //if (objecttype == ObjectType.WASTE)
-        //    player.GetComponent<PopupPopper>().ShowToolTip(player, 2);
-        //if (objecttype == ObjectType.COMPLETED)
-        //    player.GetComponent<PopupPopper>().ShowToolTip(GameObject.FindGameObjectWithTag("Bot"), 1);
+        GameObject[] workbenches = GameObject.FindGameObjectsWithTag("Workbench");
+        foreach (GameObject wb in workbenches)
+        {
+            if(wb.GetComponent<C_Workbench>().GetWorkbenchType() == objecttype)
+            {
+                Assert.IsNotNull(player.GetComponent<PopupPopper>());
+                player.GetComponent<PopupPopper>().ShowToolTip(wb,1);
+            }
+        }
+        if(objecttype == ObjectType.PACK)
+            player.GetComponent<PopupPopper>().ShowToolTip(player,3);
+        if (objecttype == ObjectType.WASTE)
+            player.GetComponent<PopupPopper>().ShowToolTip(player, 2);
+        if (objecttype == ObjectType.COMPLETED)
+            player.GetComponent<PopupPopper>().ShowToolTip(GameObject.FindGameObjectWithTag("Bot"), 1);
 
 
 
     }
     public static void RemoveTipOnPlayer(GameObject player )
     {
-        //if (!_Isactive )
-        //    return;
-        //if(player.GetComponent<PopupPopper>() != null)
-        //    player.GetComponent<PopupPopper>().HideToolTip();
+        if (!_Isactive )
+            return;
+        if(player.GetComponent<PopupPopper>() != null)
+            player.GetComponent<PopupPopper>().HideToolTip();
     }
 }
